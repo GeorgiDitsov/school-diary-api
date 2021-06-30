@@ -11,17 +11,22 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-	http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.csrf()
+        .disable()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-	http.authorizeRequests().anyRequest().authenticated();
-    }
+    http.authorizeRequests().anyRequest().authenticated();
+  }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-	web.ignoring().antMatchers("/v2/api-docs").antMatchers("/swagger-resources/**")
-		.antMatchers("/swagger-ui/**")
-		.antMatchers("/public");
-    }
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.ignoring()
+        .antMatchers("/v2/api-docs")
+        .antMatchers("/swagger-resources/**")
+        .antMatchers("/swagger-ui/**")
+        .antMatchers("/public");
+  }
 }
