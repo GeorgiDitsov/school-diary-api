@@ -1,0 +1,3 @@
+CREATE SEQUENCE IF NOT EXISTS user_id_sequence;
+
+CREATE SEQUENCE IF NOT EXISTS role_id_sequence;
