@@ -1,0 +1,1 @@
+ALTER TABLE school_group ADD CONSTRAINT school_group_uk UNIQUE (year, letter_index);

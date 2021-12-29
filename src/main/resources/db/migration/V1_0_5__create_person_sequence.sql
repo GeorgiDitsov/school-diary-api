@@ -1,0 +1,1 @@
+CREATE SEQUENCE IF NOT EXISTS person_id_sequence;
