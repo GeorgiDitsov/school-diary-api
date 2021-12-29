@@ -4,7 +4,7 @@ import javax.validation.constraints.Size;
 
 public class AuthenticationRequestBean {
 
-  @Size(min = 5, max = 25)
+  @Size(min = 5, max = 20)
   private String username;
 
   @Size(min = 5, max = 50)
