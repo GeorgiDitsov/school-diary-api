@@ -22,4 +22,12 @@ public interface UserService extends UserDetailsService {
    * @return
    */
   User getUserById(final Long id);
+
+  /**
+   * Retrieves user by username.
+   *
+   * @param username
+   * @return
+   */
+  User getUserByUsername(final String username);
 }

@@ -13,4 +13,11 @@ public interface AuthenticationService {
    * @return If the authentication is successfully done - the authenticated {@link User}.
    */
   User authenticate(final UsernamePasswordAuthenticationToken authenticationToken);
+
+  /**
+   * Retrieves if present the current authenticated {@link User}.
+   *
+   * @return
+   */
+  User getCurrentAuthenticatedUser();
 }

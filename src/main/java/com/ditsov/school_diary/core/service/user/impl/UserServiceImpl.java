@@ -1,6 +1,7 @@
 package com.ditsov.school_diary.core.service.user.impl;
 
 import java.util.List;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -36,5 +37,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public User getUserById(final Long id) {
     return userRepository.getById(id);
+  }
+
+  /** @see UserService#getUserByUsername(String) */
+  @Override
+  public User getUserByUsername(final String username) {
+    return userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
   }
 }

@@ -9,9 +9,11 @@ import org.springframework.stereotype.Component;
 import com.ditsov.school_diary.config.properties.ApplicationProperties;
 import com.ditsov.school_diary.core.entity.user.User;
 import com.ditsov.school_diary.core.factory.authentication.AuthenticationFactory;
+import com.ditsov.school_diary.core.factory.user.UserFactory;
 import com.ditsov.school_diary.core.service.authentication.AuthenticationService;
 import com.ditsov.school_diary.model.authentication.AuthenticationRequestBean;
 import com.ditsov.school_diary.model.authentication.AuthenticationResponseBean;
+import com.ditsov.school_diary.model.user.BasicUserResponseBean;
 
 @Component
 public class AuthenticationControllerHelper {
@@ -21,6 +23,8 @@ public class AuthenticationControllerHelper {
   @Autowired private AuthenticationService authenticationService;
 
   @Autowired private ApplicationProperties applicationProperties;
+
+  @Autowired private UserFactory userFactory;
 
   public AuthenticationResponseBean login(final AuthenticationRequestBean authenticationRequestBean)
       throws Exception {
@@ -52,4 +56,9 @@ public class AuthenticationControllerHelper {
     return authenticationFactory.createAuthenticationResponseBean(jwt);
   }
 
+  public BasicUserResponseBean getAuthenticatedUser() {
+    User authenticatedUser = authenticationService.getCurrentAuthenticatedUser();
+
+    return userFactory.convertUserToBasicUserResponseBean(authenticatedUser);
+  }
 }
