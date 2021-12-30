@@ -9,6 +9,7 @@ import com.ditsov.school_diary.core.entity.user.User;
 import com.ditsov.school_diary.core.factory.user.UserFactory;
 import com.ditsov.school_diary.core.service.user.UserService;
 import com.ditsov.school_diary.model.user.BasicUserResponseBean;
+import com.ditsov.school_diary.model.user.UpdateUserRequestBean;
 
 @Component
 public class UserControllerHelper {
@@ -26,10 +27,17 @@ public class UserControllerHelper {
         .map(userFactory::convertUserToBasicUserResponseBean)
         .collect(Collectors.toList());
   }
-  
+
   public BasicUserResponseBean getUser(final Long userId) {
     User user = userService.getUserById(userId);
-    
+
     return userFactory.convertUserToBasicUserResponseBean(user);
+  }
+
+  public BasicUserResponseBean updateUser(
+      final Long userId, final UpdateUserRequestBean userRequestBean) {
+    User user = userService.getUserById(userId);
+
+    return null;
   }
 }

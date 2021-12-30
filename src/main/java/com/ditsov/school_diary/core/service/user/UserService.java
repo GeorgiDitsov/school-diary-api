@@ -30,4 +30,12 @@ public interface UserService extends UserDetailsService {
    * @return
    */
   User getUserByUsername(final String username);
+
+  /**
+   * Saves user.
+   *
+   * @param user
+   * @return
+   */
+  User saveUser(final User user);
 }

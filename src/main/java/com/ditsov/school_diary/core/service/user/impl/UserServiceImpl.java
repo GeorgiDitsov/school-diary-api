@@ -44,4 +44,10 @@ public class UserServiceImpl implements UserService {
   public User getUserByUsername(final String username) {
     return userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
   }
+
+  /** @see UserService#saveUser(User) */
+  @Override
+  public User saveUser(final User user) {
+    return userRepository.save(user);
+  }
 }
