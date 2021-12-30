@@ -3,6 +3,9 @@ package com.ditsov.school_diary.controller.authentication.helper;
 import static com.ditsov.school_diary.util.JsonWebTokenUtil.generateKey;
 import static com.ditsov.school_diary.util.JsonWebTokenUtil.generateToken;
 import java.security.Key;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -46,14 +49,17 @@ public class AuthenticationControllerHelper {
                 .getKeyStore()
                 .getPassword());
 
+    LocalDateTime expirationDateTime =
+        LocalDateTime.now().plus(applicationProperties.getSecurity().getJwt().getExpiration());
+
     String jwt =
         generateToken(
             user,
             applicationProperties.getName(),
-            applicationProperties.getSecurity().getJwt().getExpiration(),
+            Date.from(expirationDateTime.toInstant(ZoneOffset.UTC)),
             secretKey);
 
-    return authenticationFactory.createAuthenticationResponseBean(jwt);
+    return authenticationFactory.createAuthenticationResponseBean(jwt, expirationDateTime);
   }
 
   public BasicUserResponseBean getAuthenticatedUser() {

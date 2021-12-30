@@ -3,8 +3,6 @@ package com.ditsov.school_diary.util;
 import java.io.FileInputStream;
 import java.security.Key;
 import java.security.KeyStore;
-import java.time.Duration;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
@@ -46,15 +44,10 @@ public final class JsonWebTokenUtil {
   }
 
   public static String generateToken(
-      final User user, final String issuer, final Duration expiration, final Key key) {
-    Calendar calendar = Calendar.getInstance();
-    Date currentDate = calendar.getTime();
-    calendar.add(Calendar.SECOND, (int) expiration.getSeconds());
-    Date expirationDate = calendar.getTime();
-
+      final User user, final String issuer, final Date expirationDate, final Key key) {
     return Jwts.builder()
         .setIssuer(issuer)
-        .setIssuedAt(currentDate)
+        .setIssuedAt(new Date())
         .setExpiration(expirationDate)
         .setSubject(user.getUsername())
         .claim(ROLES_CLAIM, user.getAuthorities())
