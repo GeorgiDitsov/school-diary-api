@@ -2,10 +2,10 @@ package com.ditsov.school_diary.controller.user;
 
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,7 +43,7 @@ public class UserController {
   @Secured("ROLE_ADMIN")
   public BasicUserResponseBean updateUser(
       @PathVariable(name = "id") @Min(1) final Long userId,
-      @RequestBody @Validated final UpdateUserRequestBean userRequestBean) {
+      @RequestBody @Valid final UpdateUserRequestBean userRequestBean) {
     return userControllerHelper.updateUser(userId, userRequestBean);
   }
 }

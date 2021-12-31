@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 import com.ditsov.school_diary.core.entity.user.User;
 import com.ditsov.school_diary.core.factory.user.UserFactory;
@@ -38,6 +39,11 @@ public class UserControllerHelper {
       final Long userId, final UpdateUserRequestBean userRequestBean) {
     User user = userService.getUserById(userId);
 
-    return null;
+    Optional.ofNullable(userRequestBean.getUsername()).ifPresent(user::setUsername);
+    Optional.ofNullable(userRequestBean.getEmail()).ifPresent(user::setEmail);
+    Optional.ofNullable(userRequestBean.getPassword())
+        .ifPresent(password -> user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12))));
+
+    return userFactory.convertUserToBasicUserResponseBean(userService.saveUser(user));
   }
 }

@@ -1,17 +1,17 @@
 package com.ditsov.school_diary.model.user;
 
-import javax.validation.constraints.Pattern;
+import com.ditsov.school_diary.core.validator.constraint.NullableOrPattern;
 import com.ditsov.school_diary.util.Regexp;
 
 public class UpdateUserRequestBean {
 
-  @Pattern(regexp = Regexp.USERNAME_REGEX, message = "Invalid username")
+  @NullableOrPattern(regexp = Regexp.USERNAME_REGEX, message = "Invalid username")
   private String username;
 
-  @Pattern(regexp = Regexp.PASSWORD_REGEX, message = "Invalid password")
+  @NullableOrPattern(regexp = Regexp.PASSWORD_REGEX, message = "Invalid password")
   private String password;
 
-  @Pattern(regexp = Regexp.EMAIL_REGEX, message = "Invalid email")
+  @NullableOrPattern(regexp = Regexp.EMAIL_REGEX, message = "Invalid email")
   private String email;
 
   public UpdateUserRequestBean() {}
