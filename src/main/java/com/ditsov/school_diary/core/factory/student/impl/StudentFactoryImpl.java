@@ -1,50 +1,90 @@
 package com.ditsov.school_diary.core.factory.student.impl;
 
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.ditsov.school_diary.core.entity.parent.Parent;
-import com.ditsov.school_diary.core.entity.school.group.SchoolGroup;
+import com.ditsov.school_diary.core.entity.role.Role;
 import com.ditsov.school_diary.core.entity.student.Student;
-import com.ditsov.school_diary.core.factory.common.LabeledValueFactory;
+import com.ditsov.school_diary.core.factory.common.LabeledValueBeanFactory;
+import com.ditsov.school_diary.core.factory.parent.ParentFactory;
 import com.ditsov.school_diary.core.factory.person.PersonFactory;
+import com.ditsov.school_diary.core.factory.school.group.SchoolGroupFactory;
 import com.ditsov.school_diary.core.factory.student.StudentFactory;
+import com.ditsov.school_diary.model.common.LabeledValueBean;
+import com.ditsov.school_diary.model.student.CreateStudentRequestBean;
 import com.ditsov.school_diary.model.student.StudentResponseBean;
+import com.ditsov.school_diary.model.student.UpdateStudentRequestBean;
 
 @Component
 public class StudentFactoryImpl implements StudentFactory {
 
-  @Autowired private LabeledValueFactory labeledValueFactory;
+  @Autowired private PersonFactory personFactory;
 
-  /**
-   * @see PersonFactory#addAditional(com.ditsov.school_diary.model.person.PersonResponseBean,
-   *     com.ditsov.school_diary.core.entity.person.Person)
-   */
+  @Autowired private LabeledValueBeanFactory labeledValueBeanFactory;
+
+  @Autowired private SchoolGroupFactory schoolGroupFactory;
+
+  @Autowired private ParentFactory parentFactory;
+
+  /** @see StudentFactory#convertStudentToStudentResponseBean(Student) */
   @Override
-  public StudentResponseBean addAditional(final StudentResponseBean bean, final Student person) {
-    if (person.getSchoolGroup() != null) {
-      bean.setGroup(
-          labeledValueFactory.create(
-              this.getGroupName(person.getSchoolGroup()), person.getSchoolGroup().getId()));
-    }
+  public StudentResponseBean convertStudentToStudentResponseBean(final Student student) {
+    StudentResponseBean bean = new StudentResponseBean();
 
-    if (!person.getParents().isEmpty()) {
-      bean.setParents(
-          person
-              .getParents()
-              .stream()
-              .map(parent -> labeledValueFactory.create(getParentName(parent), parent.getId()))
-              .collect(Collectors.toList()));
-    }
+    personFactory.populatePersonResponseBean(bean, student);
+
+    Optional.ofNullable(student.getSchoolGroup())
+        .map(labeledValueBeanFactory::convertSchoolGroupToLabeledValueBean)
+        .ifPresent(bean::setGroup);
+    bean.setParents(
+        student
+            .getParents()
+            .stream()
+            .map(labeledValueBeanFactory::convertPersonToLabeledValueBean)
+            .collect(Collectors.toList()));
 
     return bean;
   }
 
-  private String getGroupName(final SchoolGroup schoolGroup) {
-    return schoolGroup.getYear().toString() + schoolGroup.getIndex();
+  /**
+   * @see StudentFactory#convertCreateStudentRequestBeanToStudent(CreateStudentRequestBean, Role...)
+   */
+  @Override
+  public Student convertCreateStudentRequestBeanToStudent(
+      final CreateStudentRequestBean bean, final Role... roles) {
+    Student student = new Student();
+
+    personFactory.populatePerson(student, bean, roles);
+
+    Optional.ofNullable(bean.getGroup())
+        .ifPresent(schoolGroup -> populateSchoolGroup(student, schoolGroup));
+    populateParents(student, bean.getParents());
+
+    return student;
   }
 
-  private String getParentName(final Parent parent) {
-    return String.format("%s %s", parent.getFirstName(), parent.getLastName());
+  private void populateSchoolGroup(
+      final Student student, final LabeledValueBean<Long> schoolGroup) {
+    student.setSchoolGroup(schoolGroupFactory.createSchoolGroup(schoolGroup.getValue()));
+  }
+
+  private void populateParents(final Student student, final Set<LabeledValueBean<Long>> parents) {
+    student.setParents(
+        parents
+            .stream()
+            .map(parent -> parentFactory.createParent(parent.getValue()))
+            .collect(Collectors.toSet()));
+  }
+
+  /** @see StudentFactory#populateStudent(Student, UpdateStudentRequestBean) */
+  @Override
+  public void populateStudent(final Student student, final UpdateStudentRequestBean bean) {
+    personFactory.populatePerson(student, bean);
+
+    Optional.ofNullable(bean.getGroup())
+        .ifPresent(schoolGroup -> populateSchoolGroup(student, schoolGroup));
+    Optional.ofNullable(bean.getParents()).ifPresent(parents -> populateParents(student, parents));
   }
 }

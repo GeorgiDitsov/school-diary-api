@@ -31,6 +31,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     String username =
         (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-    return userService.getUserByUsername(username);
+    return userService.getByUsername(username);
   }
 }

@@ -19,6 +19,7 @@ import com.ditsov.school_diary.model.user.UpdateUserRequestBean;
 import io.swagger.annotations.Api;
 
 @Api(tags = "User APIs")
+@Secured("ROLE_ADMIN")
 @RestController
 @RequestMapping("/v1/users")
 public class UserController {
@@ -26,24 +27,21 @@ public class UserController {
   @Autowired private UserControllerHelper userControllerHelper;
 
   @GetMapping
-  @Secured("ROLE_ADMIN")
-  public List<BasicUserResponseBean> listAllUsers(
+  public List<BasicUserResponseBean> listUsers(
       @RequestParam(required = false) @Min(0) final Optional<Integer> page,
       @RequestParam(required = false) @Min(1) final Optional<Integer> size) {
-    return userControllerHelper.listAllUsers(page, size);
+    return userControllerHelper.listUsers(page, size);
   }
 
   @GetMapping("/{id}")
-  @Secured("ROLE_ADMIN")
   public BasicUserResponseBean getUser(@PathVariable(name = "id") @Min(1) final Long userId) {
     return userControllerHelper.getUser(userId);
   }
 
   @PatchMapping("/{id}")
-  @Secured("ROLE_ADMIN")
-  public BasicUserResponseBean updateUser(
+  public void updateUser(
       @PathVariable(name = "id") @Min(1) final Long userId,
       @RequestBody @Valid final UpdateUserRequestBean userRequestBean) {
-    return userControllerHelper.updateUser(userId, userRequestBean);
+    userControllerHelper.updateUser(userId, userRequestBean);
   }
 }

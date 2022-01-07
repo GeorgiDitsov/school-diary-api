@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -18,7 +19,7 @@ public class GlobalExceptionHandlerConfig {
 
   @Autowired private ErrorResponseBeanFactory errorResponseBeanFactory;
 
-  @ExceptionHandler({MethodArgumentNotValidException.class})
+  @ExceptionHandler({MethodArgumentNotValidException.class, DataIntegrityViolationException.class})
   public ResponseEntity<ErrorResponseBean> handleBadRequest(final Exception exception) {
     return ResponseEntity.badRequest()
         .body(

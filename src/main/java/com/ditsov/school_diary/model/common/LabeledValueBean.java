@@ -1,9 +1,9 @@
 package com.ditsov.school_diary.model.common;
 
-public class LabeledValueBean {
+public class LabeledValueBean<V> {
 
   private String label;
-  private Long value;
+  private V value;
 
   public LabeledValueBean() {}
 
@@ -15,11 +15,11 @@ public class LabeledValueBean {
     this.label = label;
   }
 
-  public Long getValue() {
+  public V getValue() {
     return value;
   }
 
-  public void setValue(Long value) {
+  public void setValue(V value) {
     this.value = value;
   }
 }

@@ -8,8 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "school_year")
@@ -27,13 +25,11 @@ public class SchoolYear {
   @Column(name = "name", nullable = false, unique = true)
   private String name;
 
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false)
-  private LocalDate createdAt;
+  @Column(name = "start_date", nullable = false)
+  private LocalDate startDate;
 
-  @UpdateTimestamp
-  @Column(name = "updated_at", nullable = false)
-  private LocalDate updatedAt;
+  @Column(name = "end_date", nullable = false)
+  private LocalDate endDate;
 
   public SchoolYear() {}
 
@@ -53,20 +49,20 @@ public class SchoolYear {
     this.name = name;
   }
 
-  public LocalDate getCreatedAt() {
-    return createdAt;
+  public LocalDate getStartDate() {
+    return startDate;
   }
 
-  public void setCreatedAt(LocalDate createdAt) {
-    this.createdAt = createdAt;
+  public void setStartDate(LocalDate startDate) {
+    this.startDate = startDate;
   }
 
-  public LocalDate getUpdatedAt() {
-    return updatedAt;
+  public LocalDate getEndDate() {
+    return endDate;
   }
 
-  public void setUpdatedAt(LocalDate updatedAt) {
-    this.updatedAt = updatedAt;
+  public void setEndDate(LocalDate endDate) {
+    this.endDate = endDate;
   }
 
   @Override

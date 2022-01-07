@@ -10,8 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import com.ditsov.school_diary.core.entity.school.year.SchoolYear;
 
 @Entity
@@ -30,13 +28,11 @@ public class SchoolSemester {
   @Column(name = "name", nullable = false, unique = true)
   private String name;
 
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false)
-  private LocalDate createdAt;
+  @Column(name = "start_date", nullable = false)
+  private LocalDate startDate;
 
-  @UpdateTimestamp
-  @Column(name = "updated_at", nullable = false)
-  private LocalDate updatedAt;
+  @Column(name = "end_date", nullable = false)
+  private LocalDate endDate;
 
   @ManyToOne
   @JoinColumn(name = "school_year_id", referencedColumnName = "school_year_id")
@@ -60,20 +56,20 @@ public class SchoolSemester {
     this.name = name;
   }
 
-  public LocalDate getCreatedAt() {
-    return createdAt;
+  public LocalDate getStartDate() {
+    return startDate;
   }
 
-  public void setCreatedAt(LocalDate createdAt) {
-    this.createdAt = createdAt;
+  public void setStartDate(LocalDate startDate) {
+    this.startDate = startDate;
   }
 
-  public LocalDate getUpdatedAt() {
-    return updatedAt;
+  public LocalDate getEndDate() {
+    return endDate;
   }
 
-  public void setUpdatedAt(LocalDate updatedAt) {
-    this.updatedAt = updatedAt;
+  public void setEndDate(LocalDate endDate) {
+    this.endDate = endDate;
   }
 
   public SchoolYear getSchoolYear() {

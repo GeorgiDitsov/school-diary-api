@@ -43,7 +43,7 @@ public class User implements UserDetails {
   private String email;
 
   @Column(name = "active", nullable = false)
-  private Boolean active;
+  private Boolean active = true;
 
   @ManyToMany
   @JoinTable(

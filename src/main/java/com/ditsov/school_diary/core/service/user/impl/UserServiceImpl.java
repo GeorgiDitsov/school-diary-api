@@ -11,12 +11,37 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.ditsov.school_diary.core.entity.user.User;
 import com.ditsov.school_diary.core.repository.user.UserRepository;
+import com.ditsov.school_diary.core.service.AbstractService;
 import com.ditsov.school_diary.core.service.user.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 
   @Autowired private UserRepository userRepository;
+
+  /** @see AbstractService#getAll() */
+  @Override
+  public List<User> getAll() {
+    return userRepository.findAll();
+  }
+
+  /** @see AbstractService#getById(Object) */
+  @Override
+  public User getById(final Long id) {
+    return userRepository.getById(id);
+  }
+
+  /** @see AbstractService#save(Object) */
+  @Override
+  public void save(final User entity) {
+    userRepository.save(entity);
+  }
+
+  /** @see AbstractService#deleteById(Object) */
+  @Override
+  public void deleteById(final Long id) {
+    userRepository.deleteById(id);
+  }
 
   /** @see UserDetailsService#loadUserByUsername(String) */
   @Override
@@ -27,27 +52,15 @@ public class UserServiceImpl implements UserService {
             () -> new UsernameNotFoundException(String.format("User: %s, not found.", username)));
   }
 
-  /** @see UserService#getAllUsersOrderByUsername(int, int) */
+  /** @see UserService#getByOrderByUsername(int, int) */
   @Override
-  public List<User> getAllUsersOrderByUsername(final int page, final int size) {
+  public List<User> getByOrderByUsername(final int page, final int size) {
     return userRepository.findAll(PageRequest.of(page, size, Sort.by("username"))).toList();
   }
 
-  /** @see UserService#getUserById(Long) */
+  /** @see UserService#getByUsername(String) */
   @Override
-  public User getUserById(final Long id) {
-    return userRepository.getById(id);
-  }
-
-  /** @see UserService#getUserByUsername(String) */
-  @Override
-  public User getUserByUsername(final String username) {
+  public User getByUsername(final String username) {
     return userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
-  }
-
-  /** @see UserService#saveUser(User) */
-  @Override
-  public User saveUser(final User user) {
-    return userRepository.save(user);
   }
 }

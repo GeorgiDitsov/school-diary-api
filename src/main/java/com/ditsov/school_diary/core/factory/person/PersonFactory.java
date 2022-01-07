@@ -1,35 +1,36 @@
 package com.ditsov.school_diary.core.factory.person;
 
 import com.ditsov.school_diary.core.entity.person.Person;
+import com.ditsov.school_diary.core.entity.role.Role;
+import com.ditsov.school_diary.model.person.CreatePersonRequestBean;
 import com.ditsov.school_diary.model.person.PersonResponseBean;
+import com.ditsov.school_diary.model.person.UpdatePersonRequestBean;
 
-public interface PersonFactory<T extends PersonResponseBean, E extends Person> {
+public interface PersonFactory {
 
   /**
-   * Base converting process of entity which extends {@link Person} into bean which extends {@link
-   * PersonResponseBean}.
+   * Populates a {@link PersonResponseBean} with {@link Person}.
    *
+   * @param bean
    * @param person
    * @return
    */
-  @SuppressWarnings("unchecked")
-  default T convert(final E person) {
-    T bean = (T) new PersonResponseBean();
-
-    bean.setId(person.getId());
-    bean.setFullName(String.format("%s %s", person.getFirstName(), person.getLastName()));
-    bean.setPin(person.getPin());
-    bean.setUsername(person.getUser().getUsername());
-
-    return addAditional(bean, person);
-  }
+  void populatePersonResponseBean(final PersonResponseBean bean, final Person person);
 
   /**
-   * Sets additional fields to the bean which extends {@link PersonResponseBean} from the entity
-   * which extends {@link Person}.
+   * Populates a {@link Person} with {@link CreatePersonRequestBean}.
    *
    * @param person
-   * @return
+   * @param bean
+   * @param roles
    */
-  T addAditional(final T bean, final E person);
+  void populatePerson(final Person person, final CreatePersonRequestBean bean, final Role... roles);
+
+  /**
+   * Populates a {@link Person} with non-null values from {@link UpdatePersonRequestBean}.
+   *
+   * @param person
+   * @param bean
+   */
+  void populatePerson(final Person person, final UpdatePersonRequestBean bean);
 }

@@ -1,5 +1,6 @@
 package com.ditsov.school_diary.core.entity.person;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class Person {
   @Column(name = "pin")
   private String pin;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "user_id", referencedColumnName = "user_id")
   private User user;
 

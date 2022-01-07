@@ -3,25 +3,18 @@ package com.ditsov.school_diary.core.service.user;
 import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import com.ditsov.school_diary.core.entity.user.User;
+import com.ditsov.school_diary.core.service.AbstractService;
 
-public interface UserService extends UserDetailsService {
+public interface UserService extends AbstractService<User, Long>, UserDetailsService {
 
   /**
-   * Retrieves all users ordered by username.
+   * Retrieves users ordered by username.
    *
    * @param page
    * @param size
    * @return
    */
-  List<User> getAllUsersOrderByUsername(final int page, final int size);
-
-  /**
-   * Retrieves user by id.
-   *
-   * @param id
-   * @return
-   */
-  User getUserById(final Long id);
+  List<User> getByOrderByUsername(final int page, final int size);
 
   /**
    * Retrieves user by username.
@@ -29,13 +22,5 @@ public interface UserService extends UserDetailsService {
    * @param username
    * @return
    */
-  User getUserByUsername(final String username);
-
-  /**
-   * Saves user.
-   *
-   * @param user
-   * @return
-   */
-  User saveUser(final User user);
+  User getByUsername(final String username);
 }

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 import com.ditsov.school_diary.core.entity.user.User;
 import com.ditsov.school_diary.core.factory.user.UserFactory;
@@ -19,9 +18,9 @@ public class UserControllerHelper {
 
   @Autowired private UserFactory userFactory;
 
-  public List<BasicUserResponseBean> listAllUsers(
+  public List<BasicUserResponseBean> listUsers(
       final Optional<Integer> page, final Optional<Integer> size) {
-    List<User> users = userService.getAllUsersOrderByUsername(page.orElse(0), size.orElse(10));
+    List<User> users = userService.getByOrderByUsername(page.orElse(0), size.orElse(10));
 
     return users
         .stream()
@@ -30,20 +29,16 @@ public class UserControllerHelper {
   }
 
   public BasicUserResponseBean getUser(final Long userId) {
-    User user = userService.getUserById(userId);
+    User user = userService.getById(userId);
 
     return userFactory.convertUserToBasicUserResponseBean(user);
   }
 
-  public BasicUserResponseBean updateUser(
-      final Long userId, final UpdateUserRequestBean userRequestBean) {
-    User user = userService.getUserById(userId);
+  public void updateUser(final Long userId, final UpdateUserRequestBean userRequestBean) {
+    User user = userService.getById(userId);
 
-    Optional.ofNullable(userRequestBean.getUsername()).ifPresent(user::setUsername);
-    Optional.ofNullable(userRequestBean.getEmail()).ifPresent(user::setEmail);
-    Optional.ofNullable(userRequestBean.getPassword())
-        .ifPresent(password -> user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12))));
+    userFactory.populateUser(user, userRequestBean);
 
-    return userFactory.convertUserToBasicUserResponseBean(userService.saveUser(user));
+    userService.save(user);
   }
 }

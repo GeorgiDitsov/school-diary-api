@@ -1,6 +1,6 @@
 package com.ditsov.school_diary.core.entity.grade;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,11 +33,11 @@ public class Grade {
 
   @CreationTimestamp
   @Column(name = "created_at", nullable = false)
-  private LocalDate createdAt;
+  private LocalDateTime createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at", nullable = false)
-  private LocalDate updatedAt;
+  private LocalDateTime updatedAt;
 
   @ManyToOne
   @JoinColumn(name = "student_id", referencedColumnName = "student_id")
@@ -65,19 +65,19 @@ public class Grade {
     this.value = value;
   }
 
-  public LocalDate getCreatedAt() {
+  public LocalDateTime getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(LocalDate createdAt) {
+  public void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
   }
 
-  public LocalDate getUpdatedAt() {
+  public LocalDateTime getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(LocalDate updatedAt) {
+  public void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
 
