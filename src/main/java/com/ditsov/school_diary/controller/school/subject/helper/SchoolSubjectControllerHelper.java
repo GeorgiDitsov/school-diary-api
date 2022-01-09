@@ -1,7 +1,6 @@
 package com.ditsov.school_diary.controller.school.subject.helper;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,10 +21,8 @@ public class SchoolSubjectControllerHelper {
 
   @Autowired private SchoolSubjectFactory schoolSubjectFactory;
 
-  public List<LabeledValueBean<Long>> listSchoolSubjects(
-      final Optional<Integer> page, final Optional<Integer> size) {
-    List<SchoolSubject> schoolSubjects =
-        schoolSubjectService.getByOrderByName(page.orElse(0), size.orElse(10));
+  public List<LabeledValueBean<Long>> listAllSchoolSubjects() {
+    List<SchoolSubject> schoolSubjects = schoolSubjectService.getAll();
 
     return schoolSubjects
         .stream()

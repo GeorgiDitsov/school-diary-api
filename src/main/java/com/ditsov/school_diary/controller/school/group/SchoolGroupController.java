@@ -1,7 +1,6 @@
 package com.ditsov.school_diary.controller.school.group;
 
 import java.util.List;
-import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ditsov.school_diary.controller.school.group.helper.SchoolGroupControllerHelper;
 import com.ditsov.school_diary.model.common.LabeledValueBean;
@@ -30,10 +28,8 @@ public class SchoolGroupController {
   @Autowired private SchoolGroupControllerHelper schoolGroupControllerHelper;
 
   @GetMapping
-  public List<LabeledValueBean<Long>> listSchoolGroups(
-      @RequestParam(required = false) @Min(0) final Optional<Integer> page,
-      @RequestParam(required = false) @Min(1) final Optional<Integer> size) {
-    return schoolGroupControllerHelper.listSchoolGroups(page, size);
+  public List<LabeledValueBean<Long>> listAllSchoolGroups() {
+    return schoolGroupControllerHelper.listAllSchoolGroups();
   }
 
   @PostMapping

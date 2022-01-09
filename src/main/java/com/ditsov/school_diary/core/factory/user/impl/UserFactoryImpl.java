@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import com.ditsov.school_diary.core.entity.role.Role;
 import com.ditsov.school_diary.core.entity.user.User;
+import com.ditsov.school_diary.core.factory.AbstractFactory;
 import com.ditsov.school_diary.core.factory.user.UserFactory;
 import com.ditsov.school_diary.model.user.BasicUserResponseBean;
 import com.ditsov.school_diary.model.user.CreateUserRequestBean;
@@ -18,17 +19,18 @@ public class UserFactoryImpl implements UserFactory {
 
   @Autowired private PasswordEncoder passwordEncoder;
 
-  /** @see UserFactory#convertUserToBasicUserResponseBean(User) */
+  /** @see AbstractFactory#convertToResponseBean(Object) */
   @Override
-  public BasicUserResponseBean convertUserToBasicUserResponseBean(final User user) {
+  public BasicUserResponseBean convertToResponseBean(final User entity) {
     BasicUserResponseBean bean = new BasicUserResponseBean();
 
-    bean.setId(user.getId());
-    bean.setUsername(user.getUsername());
-    bean.setEmail(user.getEmail());
-    bean.setActive(user.getActive());
+    bean.setId(entity.getId());
+    bean.setUsername(entity.getUsername());
+    bean.setEmail(entity.getEmail());
+    bean.setActive(entity.getActive());
     bean.setRoles(
-        user.getRoles()
+        entity
+            .getRoles()
             .stream()
             .map(role -> role.getName().getAuthority())
             .collect(Collectors.toList()));

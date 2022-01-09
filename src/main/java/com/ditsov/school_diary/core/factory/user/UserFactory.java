@@ -3,19 +3,12 @@ package com.ditsov.school_diary.core.factory.user;
 import java.util.Collection;
 import com.ditsov.school_diary.core.entity.role.Role;
 import com.ditsov.school_diary.core.entity.user.User;
+import com.ditsov.school_diary.core.factory.AbstractFactory;
 import com.ditsov.school_diary.model.user.BasicUserResponseBean;
 import com.ditsov.school_diary.model.user.CreateUserRequestBean;
 import com.ditsov.school_diary.model.user.UpdateUserRequestBean;
 
-public interface UserFactory {
-
-  /**
-   * Converts an {@link User} into a {@link BasicUserResponseBean}.
-   *
-   * @param user
-   * @return
-   */
-  BasicUserResponseBean convertUserToBasicUserResponseBean(final User user);
+public interface UserFactory extends AbstractFactory<BasicUserResponseBean, User> {
 
   /**
    * Converts a {@link CreateUserRequestBean} into an {@link User} with assigned {@link Role}s.

@@ -65,6 +65,6 @@ public class AuthenticationControllerHelper {
   public BasicUserResponseBean getAuthenticatedUser() {
     User authenticatedUser = authenticationService.getCurrentAuthenticatedUser();
 
-    return userFactory.convertUserToBasicUserResponseBean(authenticatedUser);
+    return userFactory.convertToResponseBean(authenticatedUser);
   }
 }

@@ -1,19 +1,12 @@
 package com.ditsov.school_diary.core.factory.school.course;
 
 import com.ditsov.school_diary.core.entity.school.course.SchoolCourse;
+import com.ditsov.school_diary.core.factory.AbstractFactory;
 import com.ditsov.school_diary.model.school.course.SchoolCourseRequestBean;
 import com.ditsov.school_diary.model.school.course.SchoolCourseResponseBean;
 
-public interface SchoolCourseFactory {
-
-  /**
-   * Converts an entity of type {@link SchoolCourse} into a {@link SchoolCourseResponseBean}.
-   *
-   * @param schoolCourse
-   * @return
-   */
-  SchoolCourseResponseBean convertSchoolCourseToSchoolCourseResponseBean(
-      final SchoolCourse schoolCourse);
+public interface SchoolCourseFactory
+    extends AbstractFactory<SchoolCourseResponseBean, SchoolCourse> {
 
   /**
    * Converts a {@link SchoolCourseRequestBean} into an entity of type {@link SchoolCourse}.

@@ -3,6 +3,7 @@ package com.ditsov.school_diary.core.service.user.impl;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,8 +55,8 @@ public class UserServiceImpl implements UserService {
 
   /** @see UserService#getByOrderByUsername(int, int) */
   @Override
-  public List<User> getByOrderByUsername(final int page, final int size) {
-    return userRepository.findAll(PageRequest.of(page, size, Sort.by("username"))).toList();
+  public Page<User> getByOrderByUsername(final int page, final int size) {
+    return userRepository.findAll(PageRequest.of(page, size, Sort.by("username")));
   }
 
   /** @see UserService#getByUsername(String) */

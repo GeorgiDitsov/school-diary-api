@@ -18,7 +18,7 @@ public class SchoolGroupServiceImpl implements SchoolGroupService {
   /** @see AbstractService#getAll() */
   @Override
   public List<SchoolGroup> getAll() {
-    return schoolGroupRepository.findAll();
+    return schoolGroupRepository.findAll(Sort.by("year", "index"));
   }
 
   /** @see AbstractService#getById(Object) */

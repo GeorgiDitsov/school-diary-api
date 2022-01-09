@@ -2,6 +2,7 @@ package com.ditsov.school_diary.core.service.parent.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -41,10 +42,8 @@ public class ParentServiceImpl implements ParentService {
 
   /** @see ParentService#getByOrderByFullName(int, int) */
   @Override
-  public List<Parent> getByOrderByFullName(final int page, final int size) {
-    return parentRepository
-        .findAll(PageRequest.of(page, size, Sort.by("firstName", "lastName")))
-        .toList();
+  public Page<Parent> getByOrderByFullName(final int page, final int size) {
+    return parentRepository.findAll(PageRequest.of(page, size, Sort.by("firstName", "lastName")));
   }
 
   /** @see ParentService#getAllByOrderByFullName() */

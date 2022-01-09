@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ditsov.school_diary.controller.parent.helper.ParentControllerHelper;
 import com.ditsov.school_diary.model.common.LabeledValueBean;
+import com.ditsov.school_diary.model.common.PageableBean;
 import com.ditsov.school_diary.model.parent.CreateParentRequestBean;
 import com.ditsov.school_diary.model.parent.ParentResponseBean;
 import com.ditsov.school_diary.model.parent.UpdateParentRequestBean;
@@ -31,10 +32,10 @@ public class ParentController {
   @Autowired private ParentControllerHelper parentControllerHelper;
 
   @GetMapping
-  public List<ParentResponseBean> listParents(
+  public PageableBean<ParentResponseBean> getPageOfParents(
       @RequestParam(required = false) @Min(0) final Optional<Integer> page,
       @RequestParam(required = false) @Min(1) final Optional<Integer> size) {
-    return parentControllerHelper.listParents(page, size);
+    return parentControllerHelper.getPageOfParents(page, size);
   }
 
   @GetMapping("/options")

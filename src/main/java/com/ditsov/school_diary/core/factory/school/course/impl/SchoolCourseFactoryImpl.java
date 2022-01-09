@@ -25,24 +25,20 @@ public class SchoolCourseFactoryImpl implements SchoolCourseFactory {
 
   @Autowired private SchoolSemesterFactory schoolSemesterFactory;
 
-  /** @see SchoolCourseFactory#convertSchoolCourseToSchoolCourseResponseBean(SchoolCourse) */
+  /** @see SchoolCourseFactory#convertToResponseBean(SchoolCourse) */
   @Override
-  public SchoolCourseResponseBean convertSchoolCourseToSchoolCourseResponseBean(
-      final SchoolCourse schoolCourse) {
+  public SchoolCourseResponseBean convertToResponseBean(final SchoolCourse entity) {
     SchoolCourseResponseBean bean = new SchoolCourseResponseBean();
 
-    bean.setId(schoolCourse.getId());
+    bean.setId(entity.getId());
     bean.setSubject(
-        labeledValueBeanFactory.convertSchoolSubjectToLabeledValueBean(
-            schoolCourse.getSchoolSubject()));
-    bean.setTeacher(
-        labeledValueBeanFactory.convertPersonToLabeledValueBean(schoolCourse.getTeacher()));
+        labeledValueBeanFactory.convertSchoolSubjectToLabeledValueBean(entity.getSchoolSubject()));
+    bean.setTeacher(labeledValueBeanFactory.convertPersonToLabeledValueBean(entity.getTeacher()));
     bean.setGroup(
-        labeledValueBeanFactory.convertSchoolGroupToLabeledValueBean(
-            schoolCourse.getSchoolGroup()));
+        labeledValueBeanFactory.convertSchoolGroupToLabeledValueBean(entity.getSchoolGroup()));
     bean.setSemester(
         labeledValueBeanFactory.convertSchoolSemesterToLabeledValueBean(
-            schoolCourse.getSchoolSemester()));
+            entity.getSchoolSemester()));
 
     return bean;
   }

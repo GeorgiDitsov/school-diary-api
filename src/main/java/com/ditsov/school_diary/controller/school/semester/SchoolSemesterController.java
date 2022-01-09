@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ditsov.school_diary.controller.school.semester.helper.SchoolSemesterControllerHelper;
 import com.ditsov.school_diary.model.common.LabeledValueBean;
+import com.ditsov.school_diary.model.common.PageableBean;
 import com.ditsov.school_diary.model.school.semester.CreateSchoolSemesterRequestBean;
 import com.ditsov.school_diary.model.school.semester.SchoolSemesterResponseBean;
 import com.ditsov.school_diary.model.school.semester.UpdateSchoolSemesterRequestBean;
@@ -31,10 +32,10 @@ public class SchoolSemesterController {
   @Autowired private SchoolSemesterControllerHelper schoolSemesterControllerHelper;
 
   @GetMapping
-  public List<SchoolSemesterResponseBean> listSchoolSemesters(
+  public PageableBean<SchoolSemesterResponseBean> getPageOfSchoolSemesters(
       @RequestParam(required = false) @Min(0) final Optional<Integer> page,
       @RequestParam(required = false) @Min(1) final Optional<Integer> size) {
-    return schoolSemesterControllerHelper.listSchoolSemesters(page, size);
+    return schoolSemesterControllerHelper.getPageOfSchoolSemesters(page, size);
   }
 
   @GetMapping("/options")

@@ -1,13 +1,14 @@
 package com.ditsov.school_diary.controller.school.course.helper;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import com.ditsov.school_diary.core.entity.school.course.SchoolCourse;
+import com.ditsov.school_diary.core.factory.common.PageableBeanFactory;
 import com.ditsov.school_diary.core.factory.school.course.SchoolCourseFactory;
 import com.ditsov.school_diary.core.service.school.course.SchoolCourseService;
+import com.ditsov.school_diary.model.common.PageableBean;
 import com.ditsov.school_diary.model.school.course.CreateSchoolCourseRequestBean;
 import com.ditsov.school_diary.model.school.course.SchoolCourseRequestBean;
 import com.ditsov.school_diary.model.school.course.SchoolCourseResponseBean;
@@ -18,17 +19,16 @@ public class SchoolCourseControllerHelper {
 
   @Autowired private SchoolCourseService schoolCourseService;
 
+  @Autowired private PageableBeanFactory pageableBeanFactory;
+
   @Autowired private SchoolCourseFactory schoolCourseFactory;
 
-  public List<SchoolCourseResponseBean> listSchoolCourses(
+  public PageableBean<SchoolCourseResponseBean> getPageOfSchoolCourses(
       final Optional<Integer> page, final Optional<Integer> size) {
-    List<SchoolCourse> schoolCourses =
+    Page<SchoolCourse> schoolCourses =
         schoolCourseService.getByOrderByIdDesc(page.orElse(0), page.orElse(10));
 
-    return schoolCourses
-        .stream()
-        .map(schoolCourseFactory::convertSchoolCourseToSchoolCourseResponseBean)
-        .collect(Collectors.toList());
+    return pageableBeanFactory.create(schoolCourses, schoolCourseFactory);
   }
 
   public void createSchoolCourse(final CreateSchoolCourseRequestBean schoolCourseBean) {

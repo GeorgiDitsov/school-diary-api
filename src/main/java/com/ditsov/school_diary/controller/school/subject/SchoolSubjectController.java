@@ -1,7 +1,6 @@
 package com.ditsov.school_diary.controller.school.subject;
 
 import java.util.List;
-import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ditsov.school_diary.controller.school.subject.helper.SchoolSubjectControllerHelper;
 import com.ditsov.school_diary.model.common.LabeledValueBean;
@@ -30,10 +28,8 @@ public class SchoolSubjectController {
   @Autowired private SchoolSubjectControllerHelper schoolSubjectControllerHelper;
 
   @GetMapping
-  public List<LabeledValueBean<Long>> listSchoolSubjects(
-      @RequestParam(required = false) @Min(0) final Optional<Integer> page,
-      @RequestParam(required = false) @Min(1) final Optional<Integer> size) {
-    return schoolSubjectControllerHelper.listSchoolSubjects(page, size);
+  public List<LabeledValueBean<Long>> listAllSchoolSubjects() {
+    return schoolSubjectControllerHelper.listAllSchoolSubjects();
   }
 
   @PostMapping

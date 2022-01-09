@@ -2,6 +2,7 @@ package com.ditsov.school_diary.core.service.school.year.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -42,10 +43,9 @@ public class SchoolYearServiceImpl implements SchoolYearService {
 
   /** @see SchoolYearService#getByOrderByStartDateDesc(int, int) */
   @Override
-  public List<SchoolYear> getByOrderByStartDateDesc(final int page, final int size) {
-    return schoolYearRepository
-        .findAll(PageRequest.of(page, size, Sort.by(Direction.DESC, "startDate")))
-        .toList();
+  public Page<SchoolYear> getByOrderByStartDateDesc(final int page, final int size) {
+    return schoolYearRepository.findAll(
+        PageRequest.of(page, size, Sort.by(Direction.DESC, "startDate")));
   }
 
   /** @see SchoolYearService#getAllByOrderByStartDateDesc() */

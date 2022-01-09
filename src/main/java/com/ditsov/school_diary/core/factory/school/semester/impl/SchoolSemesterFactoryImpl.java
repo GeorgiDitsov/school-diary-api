@@ -4,6 +4,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.ditsov.school_diary.core.entity.school.semester.SchoolSemester;
+import com.ditsov.school_diary.core.factory.AbstractFactory;
 import com.ditsov.school_diary.core.factory.common.LabeledValueBeanFactory;
 import com.ditsov.school_diary.core.factory.school.semester.SchoolSemesterFactory;
 import com.ditsov.school_diary.core.factory.school.year.SchoolYearFactory;
@@ -29,21 +30,17 @@ public class SchoolSemesterFactoryImpl implements SchoolSemesterFactory {
     return schoolSemester;
   }
 
-  /**
-   * @see SchoolSemesterFactory#convertSchoolSemesterToSchoolSemesterResponseBean(SchoolSemester)
-   */
+  /** @see AbstractFactory#convertToResponseBean(Object) */
   @Override
-  public SchoolSemesterResponseBean convertSchoolSemesterToSchoolSemesterResponseBean(
-      final SchoolSemester schoolSemester) {
+  public SchoolSemesterResponseBean convertToResponseBean(final SchoolSemester entity) {
     SchoolSemesterResponseBean bean = new SchoolSemesterResponseBean();
 
-    bean.setId(schoolSemester.getId());
-    bean.setName(schoolSemester.getName());
-    bean.setStartDate(schoolSemester.getStartDate());
-    bean.setEndDate(schoolSemester.getEndDate());
+    bean.setId(entity.getId());
+    bean.setName(entity.getName());
+    bean.setStartDate(entity.getStartDate());
+    bean.setEndDate(entity.getEndDate());
     bean.setSchoolYear(
-        labeledValueBeanFactory.convertSchoolYearToLabeledValueBean(
-            schoolSemester.getSchoolYear()));
+        labeledValueBeanFactory.convertSchoolYearToLabeledValueBean(entity.getSchoolYear()));
 
     return bean;
   }

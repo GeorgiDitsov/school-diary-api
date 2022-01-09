@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.ditsov.school_diary.core.entity.role.Role;
 import com.ditsov.school_diary.core.entity.student.Student;
+import com.ditsov.school_diary.core.factory.AbstractFactory;
 import com.ditsov.school_diary.core.factory.common.LabeledValueBeanFactory;
 import com.ditsov.school_diary.core.factory.parent.ParentFactory;
 import com.ditsov.school_diary.core.factory.person.PersonFactory;
@@ -28,18 +29,18 @@ public class StudentFactoryImpl implements StudentFactory {
 
   @Autowired private ParentFactory parentFactory;
 
-  /** @see StudentFactory#convertStudentToStudentResponseBean(Student) */
+  /** @see AbstractFactory#convertToResponseBean(Object) */
   @Override
-  public StudentResponseBean convertStudentToStudentResponseBean(final Student student) {
+  public StudentResponseBean convertToResponseBean(final Student entity) {
     StudentResponseBean bean = new StudentResponseBean();
 
-    personFactory.populatePersonResponseBean(bean, student);
+    personFactory.populatePersonResponseBean(bean, entity);
 
-    Optional.ofNullable(student.getSchoolGroup())
+    Optional.ofNullable(entity.getSchoolGroup())
         .map(labeledValueBeanFactory::convertSchoolGroupToLabeledValueBean)
         .ifPresent(bean::setGroup);
     bean.setParents(
-        student
+        entity
             .getParents()
             .stream()
             .map(labeledValueBeanFactory::convertPersonToLabeledValueBean)

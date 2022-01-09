@@ -20,19 +20,13 @@ public class GradeControllerHelper {
   public List<GradeResponseBean> listGradesBy(final Long studentId, final Long courseId) {
     List<Grade> grades = gradeService.getByStudentIdAndSchoolCourseId(studentId, courseId);
 
-    return grades
-        .stream()
-        .map(gradeFactory::convertGradeToGradeResponseBean)
-        .collect(Collectors.toList());
+    return grades.stream().map(gradeFactory::convertToResponseBean).collect(Collectors.toList());
   }
 
   public List<GradeResponseBean> listGrades(
       final Optional<Integer> page, final Optional<Integer> size) {
     List<Grade> grades = gradeService.getByOrderByUpdatedAtDesc(page.orElse(0), size.orElse(10));
 
-    return grades
-        .stream()
-        .map(gradeFactory::convertGradeToGradeResponseBean)
-        .collect(Collectors.toList());
+    return grades.stream().map(gradeFactory::convertToResponseBean).collect(Collectors.toList());
   }
 }

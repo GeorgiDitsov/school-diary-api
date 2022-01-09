@@ -18,7 +18,7 @@ public class SchoolSubjectServiceImpl implements SchoolSubjectService {
   /** @see AbstractService#getAll() */
   @Override
   public List<SchoolSubject> getAll() {
-    return schoolSubjectRepository.findAll();
+    return schoolSubjectRepository.findAll(Sort.by("name"));
   }
 
   /** @see AbstractService#getById(Object) */

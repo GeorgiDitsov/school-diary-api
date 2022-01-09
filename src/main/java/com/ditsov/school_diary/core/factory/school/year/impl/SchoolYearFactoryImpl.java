@@ -21,16 +21,15 @@ public class SchoolYearFactoryImpl implements SchoolYearFactory {
     return schoolYear;
   }
 
-  /** @see SchoolYearFactory#convertSchoolYearToSchoolYearResponseBean(SchoolYear) */
+  /** @see SchoolYearFactory#convertToResponseBean(SchoolYear) */
   @Override
-  public SchoolYearResponseBean convertSchoolYearToSchoolYearResponseBean(
-      final SchoolYear schoolYear) {
+  public SchoolYearResponseBean convertToResponseBean(final SchoolYear entity) {
     SchoolYearResponseBean bean = new SchoolYearResponseBean();
 
-    bean.setId(schoolYear.getId());
-    bean.setName(schoolYear.getName());
-    bean.setStartDate(schoolYear.getStartDate());
-    bean.setEndDate(schoolYear.getEndDate());
+    bean.setId(entity.getId());
+    bean.setName(entity.getName());
+    bean.setStartDate(entity.getStartDate());
+    bean.setEndDate(entity.getEndDate());
 
     return bean;
   }

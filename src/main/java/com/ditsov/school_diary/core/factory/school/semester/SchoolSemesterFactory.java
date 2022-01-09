@@ -1,11 +1,13 @@
 package com.ditsov.school_diary.core.factory.school.semester;
 
 import com.ditsov.school_diary.core.entity.school.semester.SchoolSemester;
+import com.ditsov.school_diary.core.factory.AbstractFactory;
 import com.ditsov.school_diary.model.school.semester.CreateSchoolSemesterRequestBean;
 import com.ditsov.school_diary.model.school.semester.SchoolSemesterResponseBean;
 import com.ditsov.school_diary.model.school.semester.UpdateSchoolSemesterRequestBean;
 
-public interface SchoolSemesterFactory {
+public interface SchoolSemesterFactory
+    extends AbstractFactory<SchoolSemesterResponseBean, SchoolSemester> {
 
   /**
    * Creates an entity of type {@link SchoolSemester} with the given as parameters fields.
@@ -15,15 +17,6 @@ public interface SchoolSemesterFactory {
    * @return
    */
   SchoolSemester createSchoolSemester(final Long id, final String name);
-
-  /**
-   * Converts an entity of type {@link SchoolSemester} into a {@link SchoolSemesterResponseBean}.
-   *
-   * @param schoolSemester
-   * @return
-   */
-  SchoolSemesterResponseBean convertSchoolSemesterToSchoolSemesterResponseBean(
-      final SchoolSemester schoolSemester);
 
   /**
    * Converts a {@link CreateSchoolSemesterRequestBean} into a {@link SchoolSemester}.

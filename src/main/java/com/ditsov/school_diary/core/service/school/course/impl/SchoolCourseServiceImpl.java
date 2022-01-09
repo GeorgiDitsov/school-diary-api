@@ -2,6 +2,7 @@ package com.ditsov.school_diary.core.service.school.course.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -42,9 +43,8 @@ public class SchoolCourseServiceImpl implements SchoolCourseService {
 
   /** @see SchoolCourseService#getByOrderByIdDesc(int, int) */
   @Override
-  public List<SchoolCourse> getByOrderByIdDesc(final int page, final int size) {
-    return schoolCourseRepository
-        .findAll(PageRequest.of(page, size, Sort.by(Direction.DESC, "id")))
-        .toList();
+  public Page<SchoolCourse> getByOrderByIdDesc(final int page, final int size) {
+    return schoolCourseRepository.findAll(
+        PageRequest.of(page, size, Sort.by(Direction.DESC, "id")));
   }
 }

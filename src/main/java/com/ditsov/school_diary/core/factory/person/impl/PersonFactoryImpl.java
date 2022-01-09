@@ -20,7 +20,8 @@ public class PersonFactoryImpl implements PersonFactory {
   @Override
   public void populatePersonResponseBean(final PersonResponseBean bean, final Person person) {
     bean.setId(person.getId());
-    bean.setFullName(String.format("%s %s", person.getFirstName(), person.getLastName()));
+    bean.setFirstName(person.getFirstName());
+    bean.setLastName(person.getLastName());
     bean.setPin(person.getPin());
     bean.setUsername(person.getUser().getUsername());
   }

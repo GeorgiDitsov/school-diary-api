@@ -2,6 +2,7 @@ package com.ditsov.school_diary.core.service.student.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -41,10 +42,8 @@ public class StudentServiceImpl implements StudentService {
 
   /** @see StudentService#getByOrderByFullName(int, int) */
   @Override
-  public List<Student> getByOrderByFullName(final int page, final int size) {
-    return studentRepository
-        .findAll(PageRequest.of(page, size, Sort.by("firstName", "lastName")))
-        .toList();
+  public Page<Student> getByOrderByFullName(final int page, final int size) {
+    return studentRepository.findAll(PageRequest.of(page, size, Sort.by("firstName", "lastName")));
   }
 
   /** @see StudentService#getAllByOrderByFullName() */

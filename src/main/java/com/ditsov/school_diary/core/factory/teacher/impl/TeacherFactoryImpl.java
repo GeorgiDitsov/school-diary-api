@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.ditsov.school_diary.core.entity.role.Role;
 import com.ditsov.school_diary.core.entity.teacher.Teacher;
+import com.ditsov.school_diary.core.factory.AbstractFactory;
 import com.ditsov.school_diary.core.factory.common.LabeledValueBeanFactory;
 import com.ditsov.school_diary.core.factory.person.PersonFactory;
 import com.ditsov.school_diary.core.factory.school.subject.SchoolSubjectFactory;
@@ -35,15 +36,15 @@ public class TeacherFactoryImpl implements TeacherFactory {
     return teacher;
   }
 
-  /** @see TeacherFactory#convertTeacherToTeacherResponseBean(Teacher) */
+  /** @see AbstractFactory#convertToResponseBean(Object) */
   @Override
-  public TeacherResponseBean convertTeacherToTeacherResponseBean(final Teacher teacher) {
+  public TeacherResponseBean convertToResponseBean(final Teacher entity) {
     TeacherResponseBean bean = new TeacherResponseBean();
 
-    personFactory.populatePersonResponseBean(bean, teacher);
+    personFactory.populatePersonResponseBean(bean, entity);
 
     bean.setSubjects(
-        teacher
+        entity
             .getSchoolSubjects()
             .stream()
             .map(labeledValueBeanFactory::convertSchoolSubjectToLabeledValueBean)

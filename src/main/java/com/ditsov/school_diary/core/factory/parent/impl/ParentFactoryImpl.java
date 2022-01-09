@@ -29,15 +29,15 @@ public class ParentFactoryImpl implements ParentFactory {
     return parent;
   }
 
-  /** @see ParentFactory#convertParentToParentResponseBean(Parent) */
+  /** @see ParentFactory#convertToResponseBean(Parent) */
   @Override
-  public ParentResponseBean convertParentToParentResponseBean(final Parent parent) {
+  public ParentResponseBean convertToResponseBean(final Parent entity) {
     ParentResponseBean bean = new ParentResponseBean();
 
-    personFactory.populatePersonResponseBean(bean, parent);
+    personFactory.populatePersonResponseBean(bean, entity);
 
     bean.setChildren(
-        parent
+        entity
             .getChildren()
             .stream()
             .map(labeledValueBeanFactory::convertPersonToLabeledValueBean)

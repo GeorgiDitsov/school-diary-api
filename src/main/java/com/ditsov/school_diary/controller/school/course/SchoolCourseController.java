@@ -1,6 +1,5 @@
 package com.ditsov.school_diary.controller.school.course;
 
-import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ditsov.school_diary.controller.school.course.helper.SchoolCourseControllerHelper;
+import com.ditsov.school_diary.model.common.PageableBean;
 import com.ditsov.school_diary.model.school.course.CreateSchoolCourseRequestBean;
 import com.ditsov.school_diary.model.school.course.SchoolCourseResponseBean;
 import com.ditsov.school_diary.model.school.course.UpdateSchoolCourseRequestBean;
@@ -30,10 +30,10 @@ public class SchoolCourseController {
 
   @Secured("ROLE_ADMIN")
   @GetMapping
-  public List<SchoolCourseResponseBean> listSchoolCourses(
+  public PageableBean<SchoolCourseResponseBean> getPageOfSchoolCourses(
       @RequestParam(required = false) @Min(0) final Optional<Integer> page,
       @RequestParam(required = false) @Min(1) final Optional<Integer> size) {
-    return schoolCourseControllerHelper.listSchoolCourses(page, size);
+    return schoolCourseControllerHelper.getPageOfSchoolCourses(page, size);
   }
 
   @Secured("ROLE_ADMIN")
