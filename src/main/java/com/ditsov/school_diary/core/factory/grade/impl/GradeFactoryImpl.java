@@ -23,8 +23,10 @@ public class GradeFactoryImpl implements GradeFactory {
     bean.setCreatedAt(entity.getCreatedAt());
     bean.setUpdatedAt(entity.getUpdatedAt());
     bean.setStudent(labeledValueBeanFactory.convertPersonToLabeledValueBean(entity.getStudent()));
-    bean.setCourse(
-        labeledValueBeanFactory.convertSchoolCourseToLabeledValueBean(entity.getSchoolCourse()));
+    bean.setSubject(
+        labeledValueBeanFactory.convertSchoolSubjectToLabeledValueBean(
+            entity.getSchoolCourse().getSchoolSubject()));
+    bean.setTeacher(labeledValueBeanFactory.convertPersonToLabeledValueBean(entity.getUpdatedBy()));
 
     return bean;
   }

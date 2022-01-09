@@ -32,6 +32,12 @@ public class SchoolSubjectController {
     return schoolSubjectControllerHelper.listAllSchoolSubjects();
   }
 
+  @GetMapping("/{id}/teachers")
+  public List<LabeledValueBean<Long>> listTeachersBySchoolSubject(
+      @PathVariable(name = "id") @Min(1) final Long schoolSubjectId) {
+    return schoolSubjectControllerHelper.listTeachersBySchoolSubject(schoolSubjectId);
+  }
+
   @PostMapping
   public void createSchoolSubject(@RequestBody @Valid final CreateSchoolSubjectRequestBean bean) {
     schoolSubjectControllerHelper.createSchoolSubject(bean);

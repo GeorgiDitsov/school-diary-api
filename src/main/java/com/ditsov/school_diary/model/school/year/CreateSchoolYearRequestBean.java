@@ -4,14 +4,21 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import com.ditsov.school_diary.core.validator.constraint.Period;
 import com.ditsov.school_diary.model.common.PeriodBean;
+import com.ditsov.school_diary.model.common.PeriodableBean;
 
-public class CreateSchoolYearRequestBean {
+public class CreateSchoolYearRequestBean extends PeriodableBean {
 
   @NotNull private String name;
 
-  @NotNull @Valid @Period private PeriodBean period;
-
   public CreateSchoolYearRequestBean() {}
+
+  @NotNull
+  @Valid
+  @Period
+  @Override
+  public PeriodBean getPeriod() {
+    return super.getPeriod();
+  }
 
   public String getName() {
     return name;
@@ -19,13 +26,5 @@ public class CreateSchoolYearRequestBean {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public PeriodBean getPeriod() {
-    return period;
-  }
-
-  public void setPeriod(PeriodBean period) {
-    this.period = period;
   }
 }

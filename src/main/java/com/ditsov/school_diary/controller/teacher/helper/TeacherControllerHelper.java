@@ -49,6 +49,16 @@ public class TeacherControllerHelper {
         .collect(Collectors.toList());
   }
 
+  public List<LabeledValueBean<Long>> listAllSchoolSubjectsByTeacher(final Long teacherId) {
+    Teacher teacher = teacherService.getById(teacherId);
+
+    return teacher
+        .getSchoolSubjects()
+        .stream()
+        .map(labeledValueBeanFactory::convertSchoolSubjectToLabeledValueBean)
+        .collect(Collectors.toList());
+  }
+
   public void createTeacher(final CreateTeacherRequestBean teacherBean) {
     Role roleTeacher = roleService.getByName(RoleName.ROLE_TEACHER);
     Teacher teacher =

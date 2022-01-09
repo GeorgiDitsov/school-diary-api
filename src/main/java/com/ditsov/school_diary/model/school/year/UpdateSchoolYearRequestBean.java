@@ -4,17 +4,21 @@ import javax.validation.Valid;
 import org.springframework.lang.Nullable;
 import com.ditsov.school_diary.core.validator.constraint.Period;
 import com.ditsov.school_diary.model.common.PeriodBean;
+import com.ditsov.school_diary.model.common.PeriodableBean;
 
-public class UpdateSchoolYearRequestBean {
+public class UpdateSchoolYearRequestBean extends PeriodableBean {
 
   @Nullable private String name;
+
+  public UpdateSchoolYearRequestBean() {}
 
   @Nullable
   @Valid
   @Period(nullable = true)
-  private PeriodBean period;
-
-  public UpdateSchoolYearRequestBean() {}
+  @Override
+  public PeriodBean getPeriod() {
+    return super.getPeriod();
+  }
 
   public String getName() {
     return name;
@@ -22,13 +26,5 @@ public class UpdateSchoolYearRequestBean {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public PeriodBean getPeriod() {
-    return period;
-  }
-
-  public void setPeriod(PeriodBean period) {
-    this.period = period;
   }
 }

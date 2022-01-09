@@ -43,6 +43,12 @@ public class TeacherController {
     return teacherControllerHelper.listAllTeachersAsOptions();
   }
 
+  @GetMapping("/{id}/school-subjects")
+  public List<LabeledValueBean<Long>> listAllSchoolSubjectsByTeacher(
+      @PathVariable(name = "id") @Min(1) final Long teacherId) {
+    return teacherControllerHelper.listAllSchoolSubjectsByTeacher(teacherId);
+  }
+
   @PostMapping
   public void createTeacher(@RequestBody @Valid final CreateTeacherRequestBean teacherBean) {
     teacherControllerHelper.createTeacher(teacherBean);

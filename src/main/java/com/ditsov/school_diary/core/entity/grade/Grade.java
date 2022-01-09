@@ -14,6 +14,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import com.ditsov.school_diary.core.entity.school.course.SchoolCourse;
 import com.ditsov.school_diary.core.entity.student.Student;
+import com.ditsov.school_diary.core.entity.teacher.Teacher;
 
 @Entity
 @Table(name = "grade")
@@ -46,6 +47,14 @@ public class Grade {
   @ManyToOne
   @JoinColumn(name = "school_course_id", referencedColumnName = "school_course_id")
   private SchoolCourse schoolCourse;
+
+  @ManyToOne
+  @JoinColumn(name = "created_by", referencedColumnName = "teacher_id")
+  private Teacher createdBy;
+
+  @ManyToOne
+  @JoinColumn(name = "updated_by", referencedColumnName = "teacher_id")
+  private Teacher updatedBy;
 
   public Grade() {}
 
@@ -95,6 +104,22 @@ public class Grade {
 
   public void setSchoolCourse(SchoolCourse schoolCourse) {
     this.schoolCourse = schoolCourse;
+  }
+
+  public Teacher getCreatedBy() {
+    return createdBy;
+  }
+
+  public void setCreatedBy(Teacher createdBy) {
+    this.createdBy = createdBy;
+  }
+
+  public Teacher getUpdatedBy() {
+    return updatedBy;
+  }
+
+  public void setUpdatedBy(Teacher updatedBy) {
+    this.updatedBy = updatedBy;
   }
 
   @Override

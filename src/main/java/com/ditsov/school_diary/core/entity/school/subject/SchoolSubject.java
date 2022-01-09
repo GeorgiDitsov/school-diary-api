@@ -1,12 +1,16 @@
 package com.ditsov.school_diary.core.entity.school.subject;
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import com.ditsov.school_diary.core.entity.teacher.Teacher;
 
 @Entity
 @Table(name = "school_subject")
@@ -24,6 +28,9 @@ public class SchoolSubject {
   @Column(name = "name", nullable = false, unique = true)
   private String name;
 
+  @ManyToMany(mappedBy = "schoolSubjects")
+  private Set<Teacher> teachers = new HashSet<>();
+
   public SchoolSubject() {}
 
   public Long getId() {
@@ -40,6 +47,14 @@ public class SchoolSubject {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Set<Teacher> getTeachers() {
+    return teachers;
+  }
+
+  public void setTeachers(Set<Teacher> teachers) {
+    this.teachers = teachers;
   }
 
   @Override

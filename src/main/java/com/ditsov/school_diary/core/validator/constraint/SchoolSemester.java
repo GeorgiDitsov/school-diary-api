@@ -7,19 +7,16 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-import javax.validation.Constraint;
 import javax.validation.Payload;
-import com.ditsov.school_diary.core.validator.PeriodValidator;
 
 @Documented
 @Retention(RUNTIME)
 @Target({TYPE, FIELD, METHOD})
-@Constraint(validatedBy = {PeriodValidator.class})
-public @interface Period {
+public @interface SchoolSemester {
 
   boolean nullable() default false;
 
-  String message() default "Start date have to be before end date";
+  String message() default "Invalid school semester";
 
   Class<?>[] groups() default {};
 

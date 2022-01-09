@@ -10,7 +10,8 @@ public class GradeResponseBean {
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
   private LabeledValueBean<Long> student;
-  private LabeledValueBean<Long> course;
+  private LabeledValueBean<Long> subject;
+  private LabeledValueBean<Long> teacher;
 
   public GradeResponseBean() {}
 
@@ -54,11 +55,19 @@ public class GradeResponseBean {
     this.student = student;
   }
 
-  public LabeledValueBean<Long> getCourse() {
-    return course;
+  public LabeledValueBean<Long> getSubject() {
+    return subject;
   }
 
-  public void setCourse(LabeledValueBean<Long> course) {
-    this.course = course;
+  public void setSubject(LabeledValueBean<Long> subject) {
+    this.subject = subject;
+  }
+
+  public LabeledValueBean<Long> getTeacher() {
+    return teacher;
+  }
+
+  public void setTeacher(LabeledValueBean<Long> teacher) {
+    this.teacher = teacher;
   }
 }

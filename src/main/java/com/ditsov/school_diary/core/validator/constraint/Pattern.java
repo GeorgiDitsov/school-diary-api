@@ -34,7 +34,7 @@ public @interface Pattern {
     NAME("^([A-Z]{1}[a-z]{1,24})$"),
     PIN("^([0-9]{2}([0][1-9]|[1][0-2])([0][1-9]|[1-2][0-9]|[3][0-1])([0-9]){4})$"),
     SCHOOL_GROUP_INDEX("^([A-Z]{1})$"),
-    SCHOOL_SUBJECT_NAME("^([A-Za-z0-9]+)$");
+    SCHOOL_SUBJECT_NAME("^([a-zA-Z0-9]{2,50})$");
 
     private String value;
 

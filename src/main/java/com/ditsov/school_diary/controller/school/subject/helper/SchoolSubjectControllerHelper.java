@@ -30,6 +30,16 @@ public class SchoolSubjectControllerHelper {
         .collect(Collectors.toList());
   }
 
+  public List<LabeledValueBean<Long>> listTeachersBySchoolSubject(final Long schoolSubjectId) {
+    SchoolSubject schoolSubject = schoolSubjectService.getById(schoolSubjectId);
+
+    return schoolSubject
+        .getTeachers()
+        .stream()
+        .map(labeledValueBeanFactory::convertPersonToLabeledValueBean)
+        .collect(Collectors.toList());
+  }
+
   public void createSchoolSubject(final CreateSchoolSubjectRequestBean bean) {
     SchoolSubject schoolSubject =
         schoolSubjectFactory.convertCreateSchoolSubjectToSchoolSubject(bean);

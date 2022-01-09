@@ -2,6 +2,7 @@ package com.ditsov.school_diary.core.service.grade.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -42,16 +43,16 @@ public class GradeServiceImpl implements GradeService {
 
   /** @see GradeService#getByOrderByUpdatedAtDesc(int, int) */
   @Override
-  public List<Grade> getByOrderByUpdatedAtDesc(final int page, final int size) {
-    return gradeRepository
-        .findAll(PageRequest.of(page, size, Sort.by(Direction.DESC, "updatedAt")))
-        .toList();
+  public Page<Grade> getByOrderByUpdatedAtDesc(final int page, final int size) {
+    return gradeRepository.findAll(
+        PageRequest.of(page, size, Sort.by(Direction.DESC, "updatedAt")));
   }
 
-  /** @see GradeService#getByStudentIdAndSchoolCourseId(Long, Long) */
+  /** @see GradeService#getByStudentIdAndSchoolCourseId(Long, Long, int, int) */
   @Override
-  public List<Grade> getByStudentIdAndSchoolCourseId(final Long studentId, final Long courseId) {
-    return gradeRepository.findAllByStudentIdAndSchoolCourseIdOrderByUpdatedAtDesc(
-        studentId, courseId);
+  public Page<Grade> getByStudentIdAndSchoolCourseId(
+      final Long studentId, final Long courseId, final int page, final int size) {
+    return gradeRepository.findAllByStudentIdAndSchoolCourseId(
+        studentId, courseId, PageRequest.of(page, size, Sort.by(Direction.DESC, "updatedAt")));
   }
 }
