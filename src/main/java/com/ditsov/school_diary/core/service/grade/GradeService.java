@@ -1,8 +1,11 @@
 package com.ditsov.school_diary.core.service.grade;
 
+import java.util.List;
 import org.springframework.data.domain.Page;
 import com.ditsov.school_diary.core.entity.grade.Grade;
 import com.ditsov.school_diary.core.service.AbstractService;
+import com.ditsov.school_diary.model.grade.CreateGradeRequestBean;
+import com.ditsov.school_diary.model.grade.GradeStatistics;
 
 public interface GradeService extends AbstractService<Grade, Long> {
 
@@ -16,14 +19,33 @@ public interface GradeService extends AbstractService<Grade, Long> {
   Page<Grade> getByOrderByUpdatedAtDesc(final int page, final int size);
 
   /**
-   * Retrieves a {@link Page} of grades by student and school course.
+   * Retrieves all grades by school course.
    *
-   * @param studentId
-   * @param courseId
-   * @param page
-   * @param size
+   * @param schoolCourseId
    * @return
    */
-  Page<Grade> getByStudentIdAndSchoolCourseId(
-      final Long studentId, final Long courseId, final int page, final int size);
+  List<Grade> getAllBySchoolCourseId(final Long schoolSemesterId);
+
+  /**
+   * Creates and saves a new grade.
+   *
+   * @param gradeBean
+   */
+  void createGrade(final CreateGradeRequestBean gradeBean);
+
+  /**
+   * Retrieves grades statistics by student id.
+   *
+   * @param studentId
+   * @return
+   */
+  List<GradeStatistics> getGradesStatisticsByStudentId(final Long studentId);
+
+  /**
+   * Retrieves grades statistics by school course id.
+   *
+   * @param schoolCourseId
+   * @return
+   */
+  List<GradeStatistics> getGradesStatisticsBySchoolCourseId(final Long schoolCourseId);
 }

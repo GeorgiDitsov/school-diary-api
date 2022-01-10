@@ -22,4 +22,11 @@ public interface SchoolSemesterService extends AbstractService<SchoolSemester, L
    * @return
    */
   List<SchoolSemester> getAllByOrderByStartDateDesc();
+
+  /**
+   * Retrieves the current school semester.
+   *
+   * @return
+   */
+  SchoolSemester getCurrentSchoolSemester();
 }

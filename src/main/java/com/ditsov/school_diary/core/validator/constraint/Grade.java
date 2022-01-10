@@ -9,17 +9,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import com.ditsov.school_diary.core.validator.SchoolSemesterValidator;
+import com.ditsov.school_diary.core.validator.GradeValidator;
 
 @Documented
 @Retention(RUNTIME)
 @Target({TYPE, FIELD, METHOD})
-@Constraint(validatedBy = {SchoolSemesterValidator.class})
-public @interface SchoolSemester {
+@Constraint(validatedBy = {GradeValidator.class})
+public @interface Grade {
 
-  boolean nullable() default false;
-
-  String message() default "Invalid school semester";
+  String message() default "Invalid grade";
 
   Class<?>[] groups() default {};
 

@@ -30,17 +30,25 @@ public class SchoolCourseFactoryImpl implements SchoolCourseFactory {
   public SchoolCourseResponseBean convertToResponseBean(final SchoolCourse entity) {
     SchoolCourseResponseBean bean = new SchoolCourseResponseBean();
 
-    bean.setId(entity.getId());
-    bean.setSubject(
-        labeledValueBeanFactory.convertSchoolSubjectToLabeledValueBean(entity.getSchoolSubject()));
-    bean.setTeacher(labeledValueBeanFactory.convertPersonToLabeledValueBean(entity.getTeacher()));
-    bean.setGroup(
-        labeledValueBeanFactory.convertSchoolGroupToLabeledValueBean(entity.getSchoolGroup()));
-    bean.setSemester(
-        labeledValueBeanFactory.convertSchoolSemesterToLabeledValueBean(
-            entity.getSchoolSemester()));
+    populateSchoolCourseBean(bean, entity);
 
     return bean;
+  }
+
+  private void populateSchoolCourseBean(
+      final SchoolCourseResponseBean bean, final SchoolCourse schoolCourse) {
+    bean.setId(schoolCourse.getId());
+    bean.setSubject(
+        labeledValueBeanFactory.convertSchoolSubjectToLabeledValueBean(
+            schoolCourse.getSchoolSubject()));
+    bean.setTeacher(
+        labeledValueBeanFactory.convertPersonToLabeledValueBean(schoolCourse.getTeacher()));
+    bean.setGroup(
+        labeledValueBeanFactory.convertSchoolGroupToLabeledValueBean(
+            schoolCourse.getSchoolGroup()));
+    bean.setSemester(
+        labeledValueBeanFactory.convertSchoolSemesterToLabeledValueBean(
+            schoolCourse.getSchoolSemester()));
   }
 
   /**

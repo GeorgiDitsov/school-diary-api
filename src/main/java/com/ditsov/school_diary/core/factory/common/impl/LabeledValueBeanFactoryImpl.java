@@ -23,6 +23,18 @@ public class LabeledValueBeanFactoryImpl implements LabeledValueBeanFactory {
     return String.format("%s %s, %s", person.getFirstName(), person.getLastName(), person.getPin());
   }
 
+  /** @see LabeledValueBeanFactory#convertPersonToAnonLabeledValueBean(Person) */
+  @Override
+  public LabeledValueBean<Long> convertPersonToAnonLabeledValueBean(final Person person) {
+    return create(getPersonAnonInfo(person), person.getId());
+  }
+
+  private String getPersonAnonInfo(final Person person) {
+    return String.format(
+        "%s %s, %s",
+        person.getFirstName(), person.getLastName(), person.getPin().substring(0, 6) + "****");
+  }
+
   /** @see LabeledValueBeanFactory#convertSchoolGroupToLabeledValueBean(SchoolGroup) */
   @Override
   public LabeledValueBean<Long> convertSchoolGroupToLabeledValueBean(

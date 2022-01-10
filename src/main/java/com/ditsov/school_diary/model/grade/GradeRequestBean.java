@@ -1,10 +1,17 @@
 package com.ditsov.school_diary.model.grade;
 
-public abstract class GradeRequestBean {
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import org.springframework.lang.NonNull;
 
+public class GradeRequestBean {
+
+  @NonNull
+  @Min(2)
+  @Max(6)
   private Double value;
-  private Long studentId;
-  private Long schoolCourseId;
+
+  public GradeRequestBean() {}
 
   public Double getValue() {
     return value;
@@ -12,21 +19,5 @@ public abstract class GradeRequestBean {
 
   public void setValue(Double value) {
     this.value = value;
-  }
-
-  public Long getStudentId() {
-    return studentId;
-  }
-
-  public void setStudentId(Long studentId) {
-    this.studentId = studentId;
-  }
-
-  public Long getSchoolCourseId() {
-    return schoolCourseId;
-  }
-
-  public void setSchoolCourseId(Long schoolCourseId) {
-    this.schoolCourseId = schoolCourseId;
   }
 }

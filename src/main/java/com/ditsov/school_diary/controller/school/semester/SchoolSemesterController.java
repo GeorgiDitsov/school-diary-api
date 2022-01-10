@@ -24,13 +24,13 @@ import com.ditsov.school_diary.model.school.semester.UpdateSchoolSemesterRequest
 import io.swagger.annotations.Api;
 
 @Api(tags = "School Semester APIs")
-@Secured("ROLE_ADMIN")
 @RestController
 @RequestMapping("/v1/school-semesters")
 public class SchoolSemesterController {
 
   @Autowired private SchoolSemesterControllerHelper schoolSemesterControllerHelper;
 
+  @Secured("ROLE_ADMIN")
   @GetMapping
   public PageableBean<SchoolSemesterResponseBean> getPageOfSchoolSemesters(
       @RequestParam(required = false) @Min(0) final Optional<Integer> page,
@@ -38,16 +38,25 @@ public class SchoolSemesterController {
     return schoolSemesterControllerHelper.getPageOfSchoolSemesters(page, size);
   }
 
+  @Secured("ROLE_ADMIN")
   @GetMapping("/options")
   public List<LabeledValueBean<Long>> listAllSchoolSemestersAsOptions() {
     return schoolSemesterControllerHelper.listAllSchoolSemestersAsOptions();
   }
 
+  @Secured({"ROLE_TEACHER", "ROLE_STUDENT", "ROLE_PARENT"})
+  @GetMapping("/current")
+  public LabeledValueBean<Long> getCurrentSchoolSemester() {
+    return schoolSemesterControllerHelper.getCurrentSchoolSemester();
+  }
+
+  @Secured("ROLE_ADMIN")
   @PostMapping
   public void createSchoolSemester(@RequestBody @Valid final CreateSchoolSemesterRequestBean bean) {
     schoolSemesterControllerHelper.createSchoolSemester(bean);
   }
 
+  @Secured("ROLE_ADMIN")
   @PatchMapping("/{id}")
   public void updateSchoolSemester(
       @PathVariable(name = "id") @Min(1) final Long schoolGroupId,
@@ -55,6 +64,7 @@ public class SchoolSemesterController {
     schoolSemesterControllerHelper.updateSchoolSemester(schoolGroupId, bean);
   }
 
+  @Secured("ROLE_ADMIN")
   @DeleteMapping("/{id}")
   public void deleteSchoolSemester(@PathVariable(name = "id") @Min(1) final Long schoolGroupId) {
     schoolSemesterControllerHelper.deleteSchoolSemester(schoolGroupId);

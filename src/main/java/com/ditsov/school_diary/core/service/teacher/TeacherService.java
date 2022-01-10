@@ -17,6 +17,14 @@ public interface TeacherService extends AbstractService<Teacher, Long> {
   Page<Teacher> getByOrderByFullName(final int page, final int size);
 
   /**
+   * Retrieves a {@link Page} of teachers by user id.
+   *
+   * @param userId
+   * @return
+   */
+  Teacher getByUserId(final Long userId);
+
+  /**
    * Retrieves all teachers ordered by full name.
    *
    * @return

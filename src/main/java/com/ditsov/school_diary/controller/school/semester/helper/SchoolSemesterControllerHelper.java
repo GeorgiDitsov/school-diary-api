@@ -46,6 +46,12 @@ public class SchoolSemesterControllerHelper {
         .collect(Collectors.toList());
   }
 
+  public LabeledValueBean<Long> getCurrentSchoolSemester() {
+    SchoolSemester current = schoolSemesterService.getCurrentSchoolSemester();
+
+    return labeledValueBeanFactory.convertSchoolSemesterToLabeledValueBean(current);
+  }
+
   public void createSchoolSemester(final CreateSchoolSemesterRequestBean bean) {
     SchoolSemester schoolSemester =
         schoolSemesterFactory.convertCreateSchoolSemesterRequestBeanToSchoolSemester(bean);

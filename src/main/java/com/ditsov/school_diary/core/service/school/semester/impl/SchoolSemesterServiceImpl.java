@@ -1,6 +1,8 @@
 package com.ditsov.school_diary.core.service.school.semester.impl;
 
+import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -52,5 +54,13 @@ public class SchoolSemesterServiceImpl implements SchoolSemesterService {
   @Override
   public List<SchoolSemester> getAllByOrderByStartDateDesc() {
     return schoolSemesterRepository.findAll(Sort.by(Direction.DESC, "startDate"));
+  }
+
+  /** @see SchoolSemesterService#getCurrentSchoolSemester() */
+  @Override
+  public SchoolSemester getCurrentSchoolSemester() {
+    return schoolSemesterRepository
+        .findByDate(LocalDate.now())
+        .orElseThrow(EntityNotFoundException::new);
   }
 }

@@ -11,6 +11,8 @@ import com.ditsov.school_diary.core.entity.grade.Grade;
 import com.ditsov.school_diary.core.repository.grade.GradeRepository;
 import com.ditsov.school_diary.core.service.AbstractService;
 import com.ditsov.school_diary.core.service.grade.GradeService;
+import com.ditsov.school_diary.model.grade.CreateGradeRequestBean;
+import com.ditsov.school_diary.model.grade.GradeStatistics;
 
 @Service
 public class GradeServiceImpl implements GradeService {
@@ -48,11 +50,31 @@ public class GradeServiceImpl implements GradeService {
         PageRequest.of(page, size, Sort.by(Direction.DESC, "updatedAt")));
   }
 
-  /** @see GradeService#getByStudentIdAndSchoolCourseId(Long, Long, int, int) */
+  /** @see GradeService#getAllBySchoolCourseId(Long) */
   @Override
-  public Page<Grade> getByStudentIdAndSchoolCourseId(
-      final Long studentId, final Long courseId, final int page, final int size) {
-    return gradeRepository.findAllByStudentIdAndSchoolCourseId(
-        studentId, courseId, PageRequest.of(page, size, Sort.by(Direction.DESC, "updatedAt")));
+  public List<Grade> getAllBySchoolCourseId(final Long schoolCourseId) {
+    return gradeRepository.findAllBySchoolCourseIdOrderByUpdatedAtDesc(schoolCourseId);
+  }
+
+  @Override
+  public void createGrade(final CreateGradeRequestBean gradeBean) {
+    Grade grade = new Grade();
+
+    grade.setValue(gradeBean.getValue());
+    grade.setStudent(null);
+
+    gradeRepository.save(null);
+  }
+
+  /** @see GradeService#getGradesStatisticsByStudentId(Long) */
+  @Override
+  public List<GradeStatistics> getGradesStatisticsByStudentId(final Long studentId) {
+    return gradeRepository.findGradeStatisticsByStudentId(studentId);
+  }
+
+  /** @see GradeService#getGradesStatisticsBySchoolCourseId(Long) */
+  @Override
+  public List<GradeStatistics> getGradesStatisticsBySchoolCourseId(final Long schoolCourseId) {
+    return gradeRepository.findGradeStatisticsBySchoolCourseId(schoolCourseId);
   }
 }

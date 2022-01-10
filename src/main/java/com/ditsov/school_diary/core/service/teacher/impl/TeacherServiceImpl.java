@@ -46,6 +46,12 @@ public class TeacherServiceImpl implements TeacherService {
     return teacherRepository.findAll(PageRequest.of(page, size, Sort.by("firstName", "lastName")));
   }
 
+  /** @see TeacherService#getByUserId(Long) */
+  @Override
+  public Teacher getByUserId(final Long userId) {
+    return teacherRepository.findByUserId(userId);
+  }
+
   /** @see TeacherService#getAllByOrderByFullName() */
   @Override
   public List<Teacher> getAllByOrderByFullName() {

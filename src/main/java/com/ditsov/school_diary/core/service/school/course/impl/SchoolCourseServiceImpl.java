@@ -47,4 +47,20 @@ public class SchoolCourseServiceImpl implements SchoolCourseService {
     return schoolCourseRepository.findAll(
         PageRequest.of(page, size, Sort.by(Direction.DESC, "id")));
   }
+
+  /** @see SchoolCourseService#getAllByTeacherIdAndSchoolSemesterId(Long, Long) */
+  @Override
+  public List<SchoolCourse> getAllByTeacherIdAndSchoolSemesterId(
+      final Long teacherId, final Long schoolSemesterId) {
+    return schoolCourseRepository.findAllByTeacherIdAndSchoolSemesterId(
+        teacherId, schoolSemesterId, Sort.by("schoolGroup.year", "schoolGroup.index"));
+  }
+
+  /** @see SchoolCourseService#getAllBySchoolGroupIdAndSchoolSemesterId(Long, Long) */
+  @Override
+  public List<SchoolCourse> getAllBySchoolGroupIdAndSchoolSemesterId(
+      final Long schoolGroupId, final Long schoolSemesterId) {
+    return schoolCourseRepository.findAllBySchoolGroupIdAndSchoolSemesterId(
+        schoolGroupId, schoolSemesterId, Sort.by("schoolSubject.name"));
+  }
 }

@@ -1,13 +1,17 @@
 package com.ditsov.school_diary.core.entity.school.group;
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import com.ditsov.school_diary.core.entity.student.Student;
 
 @Entity
 @Table(
@@ -29,6 +33,9 @@ public class SchoolGroup {
 
   @Column(name = "letter_index", nullable = false)
   private String index;
+
+  @OneToMany(mappedBy = "schoolGroup")
+  private Set<Student> students = new HashSet<>();
 
   public SchoolGroup() {}
 
@@ -54,6 +61,14 @@ public class SchoolGroup {
 
   public void setIndex(String index) {
     this.index = index;
+  }
+
+  public Set<Student> getStudents() {
+    return students;
+  }
+
+  public void setStudents(Set<Student> students) {
+    this.students = students;
   }
 
   @Override

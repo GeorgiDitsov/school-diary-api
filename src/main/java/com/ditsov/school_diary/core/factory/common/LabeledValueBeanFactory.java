@@ -19,6 +19,14 @@ public interface LabeledValueBeanFactory {
   LabeledValueBean<Long> convertPersonToLabeledValueBean(final Person person);
 
   /**
+   * Converts an entity of type {@link Person} into an anonymized {@link LabeledValueBean}.
+   *
+   * @param person
+   * @return
+   */
+  LabeledValueBean<Long> convertPersonToAnonLabeledValueBean(final Person person);
+
+  /**
    * Converts an entity of type {@link SchoolGroup} into a {@link LabeledValueBean}.
    *
    * @param schoolGroup

@@ -1,5 +1,6 @@
 package com.ditsov.school_diary.controller.school.course;
 
+import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ditsov.school_diary.controller.school.course.helper.SchoolCourseControllerHelper;
+import com.ditsov.school_diary.model.common.LabeledValueBean;
 import com.ditsov.school_diary.model.common.PageableBean;
 import com.ditsov.school_diary.model.school.course.CreateSchoolCourseRequestBean;
 import com.ditsov.school_diary.model.school.course.SchoolCourseResponseBean;
@@ -34,6 +36,22 @@ public class SchoolCourseController {
       @RequestParam(required = false) @Min(0) final Optional<Integer> page,
       @RequestParam(required = false) @Min(1) final Optional<Integer> size) {
     return schoolCourseControllerHelper.getPageOfSchoolCourses(page, size);
+  }
+
+  @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
+  @GetMapping("/all")
+  public List<SchoolCourseResponseBean> listAllSchoolCoursesBy(
+      @RequestParam(required = false) @Min(1) final Optional<Long> teacherId,
+      @RequestParam(required = false) @Min(1) final Optional<Long> schoolGroupId,
+      @RequestParam @Min(1) final Long schoolSemesterId) {
+    return schoolCourseControllerHelper.listAllSchoolCoursesBy(teacherId, schoolGroupId, schoolSemesterId);
+  }
+
+  @Secured("ROLE_TEACHER")
+  @GetMapping("/{id}/students")
+  public List<LabeledValueBean<Long>> listAllStudentsBySchoolCourse(
+      @PathVariable(name = "id") @Min(1) final Long schoolCourseId) {
+    return schoolCourseControllerHelper.listAllStudentsBySchoolCourse(schoolCourseId);
   }
 
   @Secured("ROLE_ADMIN")

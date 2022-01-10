@@ -1,13 +1,18 @@
 package com.ditsov.school_diary.controller.school.course.helper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import com.ditsov.school_diary.core.entity.school.course.SchoolCourse;
+import com.ditsov.school_diary.core.factory.common.LabeledValueBeanFactory;
 import com.ditsov.school_diary.core.factory.common.PageableBeanFactory;
 import com.ditsov.school_diary.core.factory.school.course.SchoolCourseFactory;
 import com.ditsov.school_diary.core.service.school.course.SchoolCourseService;
+import com.ditsov.school_diary.model.common.LabeledValueBean;
 import com.ditsov.school_diary.model.common.PageableBean;
 import com.ditsov.school_diary.model.school.course.CreateSchoolCourseRequestBean;
 import com.ditsov.school_diary.model.school.course.SchoolCourseRequestBean;
@@ -23,12 +28,45 @@ public class SchoolCourseControllerHelper {
 
   @Autowired private SchoolCourseFactory schoolCourseFactory;
 
+  @Autowired private LabeledValueBeanFactory labeledValueBeanFactory;
+
   public PageableBean<SchoolCourseResponseBean> getPageOfSchoolCourses(
       final Optional<Integer> page, final Optional<Integer> size) {
     Page<SchoolCourse> schoolCourses =
         schoolCourseService.getByOrderByIdDesc(page.orElse(0), page.orElse(10));
 
     return pageableBeanFactory.create(schoolCourses, schoolCourseFactory);
+  }
+
+  public List<SchoolCourseResponseBean> listAllSchoolCoursesBy(
+      final Optional<Long> teacherId, final Optional<Long> schoolGroupId, final Long schoolSemesterId) {
+    List<SchoolCourse> schoolCourses = new ArrayList<>();
+
+    if (teacherId.isPresent()) {
+      schoolCourses =
+          schoolCourseService.getAllByTeacherIdAndSchoolSemesterId(
+              teacherId.get(), schoolSemesterId);
+    } else if (schoolGroupId.isPresent()) {
+      schoolCourses =
+          schoolCourseService.getAllBySchoolGroupIdAndSchoolSemesterId(
+              schoolGroupId.get(), schoolSemesterId);
+    }
+
+    return schoolCourses
+        .stream()
+        .map(schoolCourseFactory::convertToResponseBean)
+        .collect(Collectors.toList());
+  }
+
+  public List<LabeledValueBean<Long>> listAllStudentsBySchoolCourse(final Long schoolCourseId) {
+    SchoolCourse schoolCourse = schoolCourseService.getById(schoolCourseId);
+
+    return schoolCourse
+        .getSchoolGroup()
+        .getStudents()
+        .stream()
+        .map(labeledValueBeanFactory::convertPersonToAnonLabeledValueBean)
+        .collect(Collectors.toList());
   }
 
   public void createSchoolCourse(final CreateSchoolCourseRequestBean schoolCourseBean) {

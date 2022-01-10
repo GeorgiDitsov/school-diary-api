@@ -78,4 +78,8 @@ public class TeacherControllerHelper {
   public void deleteTeacher(final Long teacherId) {
     teacherService.deleteById(teacherId);
   }
+
+  public TeacherResponseBean getTeacherByUser(final Long userId) {
+    return null;
+  }
 }
