@@ -1,6 +1,5 @@
 package com.ditsov.school_diary.controller.grade.helper;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,15 +55,24 @@ public class GradeControllerHelper {
     return pageableBeanFactory.create(grades, gradeFactory);
   }
 
+  public List<GradeStatistics> listGradesStatisticsBy(final Long schoolCourseId) {
+    return gradeService.getGradesStatisticsBySchoolCourseId(schoolCourseId);
+  }
+
+  public List<GradeStatistics> listGradesStatisticsBy(
+      final Long studentId, final Long schoolSemesterId) {
+    return null;
+  }
+
   public void createGrade(final CreateGradeRequestBean gradeBean) {
     User teacherUser = authenticationService.getCurrentAuthenticatedUser();
     Teacher teacher = teacherService.getByUserId(teacherUser.getId());
     Student student = studentService.getById(gradeBean.getStudentId());
     SchoolCourse schoolCourse = schoolCourseService.getById(gradeBean.getSchoolCourseId());
 
-    Grade grade = gradeFactory.createGrade(gradeBean.getValue(), student, schoolCourse, teacher);
+    Grade newGrade = gradeFactory.createGrade(gradeBean.getValue(), student, schoolCourse, teacher);
 
-    gradeService.save(grade);
+    gradeService.save(newGrade);
   }
 
   public void updateGrade(final Long gradeId, final GradeRequestBean gradeBean)
@@ -79,20 +87,25 @@ public class GradeControllerHelper {
       gradeService.save(grade);
     } else {
       throw new ValidationException(
-          "Current authenticated user doesn't has rights about this grade.");
+          String.format(
+              "Current authenticated user doesn't have rights to update Grade[id=%d].",
+              grade.getId()));
     }
   }
 
-  public List<GradeStatistics> listGradesStatisticsBy(
-      final Optional<Long> studentId, final Optional<Long> schoolCourseId) {
-    if (studentId.isPresent()) {
-      return gradeService.getGradesStatisticsByStudentId(studentId.get());
-    }
+  public void deleteGrade(final Long gradeId) throws ValidationException {
+    User teacherUser = authenticationService.getCurrentAuthenticatedUser();
+    Teacher teacher = teacherService.getByUserId(teacherUser.getId());
+    Grade grade = gradeService.getById(gradeId);
 
-    if (schoolCourseId.isPresent()) {
-      return gradeService.getGradesStatisticsBySchoolCourseId(schoolCourseId.get());
-    }
+    if (grade.getSchoolCourse().getTeacher().equals(teacher)) {
 
-    return Arrays.asList();
+      gradeService.delete(grade);
+    } else {
+      throw new ValidationException(
+          String.format(
+              "Current authenticated user doesn't have rights to delete Grade[id=%d].",
+              grade.getId()));
+    }
   }
 }

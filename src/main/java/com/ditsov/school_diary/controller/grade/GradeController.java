@@ -7,6 +7,7 @@ import javax.validation.constraints.Min;
 import javax.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,12 +45,19 @@ public class GradeController {
     return gradeControllerHelper.getPageOfGrades(page, size);
   }
 
-  @Secured({"ROLE_TEACHER", "ROLE_STUDENT", "ROLE_PARENT"})
-  @GetMapping("/statistics")
+  @Secured({"ROLE_TEACHER"})
+  @GetMapping("/school-course-statistics")
   public List<GradeStatistics> listGradesStatisticsBy(
-      @RequestParam(required = false) @Min(1) final Optional<Long> studentId,
-      @RequestParam(required = false) @Min(1) final Optional<Long> schoolCourseId) {
-    return gradeControllerHelper.listGradesStatisticsBy(studentId, schoolCourseId);
+      @RequestParam @Min(1) final Long schoolCourseId) {
+    return gradeControllerHelper.listGradesStatisticsBy(schoolCourseId);
+  }
+
+  @Secured({"ROLE_STUDENT", "ROLE_PARENT"})
+  @GetMapping("/student-statistics")
+  public List<GradeStatistics> listGradesStatisticsBy(
+      @RequestParam @Min(1) final Long studentId,
+      @RequestParam @Min(1) final Long schoolSemesterId) {
+    return gradeControllerHelper.listGradesStatisticsBy(studentId, schoolSemesterId);
   }
 
   @Secured("ROLE_TEACHER")
@@ -65,5 +73,12 @@ public class GradeController {
       @RequestBody @Valid final GradeRequestBean gradeBean)
       throws ValidationException {
     gradeControllerHelper.updateGrade(gradeId, gradeBean);
+  }
+
+  @Secured("ROLE_TEACHER")
+  @DeleteMapping("/{id}")
+  public void deleteGrade(@PathVariable(name = "id") @Min(1) final Long gradeId)
+      throws ValidationException {
+    gradeControllerHelper.deleteGrade(gradeId);
   }
 }

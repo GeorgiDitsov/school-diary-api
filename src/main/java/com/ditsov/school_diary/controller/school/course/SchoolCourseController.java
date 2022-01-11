@@ -38,15 +38,6 @@ public class SchoolCourseController {
     return schoolCourseControllerHelper.getPageOfSchoolCourses(page, size);
   }
 
-  @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-  @GetMapping("/all")
-  public List<SchoolCourseResponseBean> listAllSchoolCoursesBy(
-      @RequestParam(required = false) @Min(1) final Optional<Long> teacherId,
-      @RequestParam(required = false) @Min(1) final Optional<Long> schoolGroupId,
-      @RequestParam @Min(1) final Long schoolSemesterId) {
-    return schoolCourseControllerHelper.listAllSchoolCoursesBy(teacherId, schoolGroupId, schoolSemesterId);
-  }
-
   @Secured("ROLE_TEACHER")
   @GetMapping("/{id}/students")
   public List<LabeledValueBean<Long>> listAllStudentsBySchoolCourse(

@@ -1,5 +1,6 @@
 package com.ditsov.school_diary.core.factory.school.course.impl;
 
+import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.ditsov.school_diary.core.entity.school.course.SchoolCourse;
@@ -9,6 +10,7 @@ import com.ditsov.school_diary.core.factory.school.group.SchoolGroupFactory;
 import com.ditsov.school_diary.core.factory.school.semester.SchoolSemesterFactory;
 import com.ditsov.school_diary.core.factory.school.subject.SchoolSubjectFactory;
 import com.ditsov.school_diary.core.factory.teacher.TeacherFactory;
+import com.ditsov.school_diary.model.school.course.ExtendedSchoolCourseResponseBean;
 import com.ditsov.school_diary.model.school.course.SchoolCourseRequestBean;
 import com.ditsov.school_diary.model.school.course.SchoolCourseResponseBean;
 
@@ -83,5 +85,20 @@ public class SchoolCourseFactoryImpl implements SchoolCourseFactory {
           schoolSemesterFactory.createSchoolSemester(
               bean.getSemester().getValue(), bean.getSemester().getLabel()));
     }
+  }
+
+  /**
+   * @see SchoolCourseFactory#convertSchoolCourseToExtendedSchoolCourseResponseBean(SchoolCourse,
+   *     BigDecimal)
+   */
+  @Override
+  public ExtendedSchoolCourseResponseBean convertSchoolCourseToExtendedSchoolCourseResponseBean(
+      final SchoolCourse schoolCourse, final BigDecimal success) {
+    ExtendedSchoolCourseResponseBean bean = new ExtendedSchoolCourseResponseBean();
+
+    populateSchoolCourseBean(bean, schoolCourse);
+    bean.setSuccess(success);
+
+    return bean;
   }
 }

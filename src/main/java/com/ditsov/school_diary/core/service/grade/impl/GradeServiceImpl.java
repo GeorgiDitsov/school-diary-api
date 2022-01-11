@@ -1,5 +1,7 @@
 package com.ditsov.school_diary.core.service.grade.impl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +13,6 @@ import com.ditsov.school_diary.core.entity.grade.Grade;
 import com.ditsov.school_diary.core.repository.grade.GradeRepository;
 import com.ditsov.school_diary.core.service.AbstractService;
 import com.ditsov.school_diary.core.service.grade.GradeService;
-import com.ditsov.school_diary.model.grade.CreateGradeRequestBean;
 import com.ditsov.school_diary.model.grade.GradeStatistics;
 
 @Service
@@ -56,16 +57,6 @@ public class GradeServiceImpl implements GradeService {
     return gradeRepository.findAllBySchoolCourseIdOrderByUpdatedAtDesc(schoolCourseId);
   }
 
-  @Override
-  public void createGrade(final CreateGradeRequestBean gradeBean) {
-    Grade grade = new Grade();
-
-    grade.setValue(gradeBean.getValue());
-    grade.setStudent(null);
-
-    gradeRepository.save(null);
-  }
-
   /** @see GradeService#getGradesStatisticsByStudentId(Long) */
   @Override
   public List<GradeStatistics> getGradesStatisticsByStudentId(final Long studentId) {
@@ -76,5 +67,30 @@ public class GradeServiceImpl implements GradeService {
   @Override
   public List<GradeStatistics> getGradesStatisticsBySchoolCourseId(final Long schoolCourseId) {
     return gradeRepository.findGradeStatisticsBySchoolCourseId(schoolCourseId);
+  }
+
+  /** @see GradeService#getSuccessBySchoolCourseId(Long) */
+  @Override
+  public BigDecimal getSuccessBySchoolCourseId(final Long schoolCourseId) {
+    return gradeRepository
+        .getSuccessBySchoolCourseId(schoolCourseId)
+        .map(success -> success.setScale(2, RoundingMode.HALF_UP))
+        .orElse(BigDecimal.ZERO);
+  }
+
+  /** @see GradeService#getSuccessByStudentIdAndSchoolSemesterId(Long, Long) */
+  @Override
+  public BigDecimal getSuccessByStudentIdAndSchoolSemesterId(
+      final Long studentId, final Long schoolSemesterId) {
+    return gradeRepository
+        .getSuccessByStudentIdAndSchoolSemesterId(studentId, schoolSemesterId)
+        .map(success -> success.setScale(2, RoundingMode.HALF_UP))
+        .orElse(BigDecimal.ZERO);
+  }
+
+  /** @see GradeService#delete(Grade) */
+  @Override
+  public void delete(final Grade grade) {
+    gradeRepository.delete(grade);
   }
 }
