@@ -1,5 +1,6 @@
 package com.ditsov.school_diary.model.grade;
 
+import java.math.BigDecimal;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import org.springframework.lang.NonNull;
@@ -9,15 +10,15 @@ public class GradeRequestBean {
   @NonNull
   @Min(2)
   @Max(6)
-  private Double value;
+  private BigDecimal value;
 
   public GradeRequestBean() {}
 
-  public Double getValue() {
+  public BigDecimal getValue() {
     return value;
   }
 
-  public void setValue(Double value) {
+  public void setValue(BigDecimal value) {
     this.value = value;
   }
 }

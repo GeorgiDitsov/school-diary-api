@@ -1,5 +1,6 @@
 package com.ditsov.school_diary.core.entity.grade;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ public class Grade {
   private Long id;
 
   @Column(name = "value", nullable = false)
-  private Double value;
+  private BigDecimal value;
 
   @CreationTimestamp
   @Column(name = "created_at", nullable = false)
@@ -66,11 +67,11 @@ public class Grade {
     this.id = id;
   }
 
-  public Double getValue() {
+  public BigDecimal getValue() {
     return value;
   }
 
-  public void setValue(Double value) {
+  public void setValue(BigDecimal value) {
     this.value = value;
   }
 

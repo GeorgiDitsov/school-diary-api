@@ -1,5 +1,6 @@
 package com.ditsov.school_diary.controller.student;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -51,6 +52,15 @@ public class StudentController {
       @PathVariable(name = "id") @Min(1) final Long studentId,
       @RequestParam @Min(1) final Long schoolSemesterId) {
     return studentControllerHelper.listAllSchoolCoursesByStudent(studentId, schoolSemesterId);
+  }
+
+  @Secured({"ROLE_STUDENT", "ROLE_PARENT"})
+  @GetMapping("/{id}/success")
+  public BigDecimal getSuccessByStudentAndSchoolSemester(
+      @PathVariable(name = "id") @Min(1) final Long studentId,
+      @RequestParam @Min(1) final Long schoolSemesterId) {
+    return studentControllerHelper.getSuccessByStudentAndSchoolSemester(
+        studentId, schoolSemesterId);
   }
 
   @Secured("ROLE_ADMIN")

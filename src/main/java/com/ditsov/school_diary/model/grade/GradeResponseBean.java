@@ -1,12 +1,13 @@
 package com.ditsov.school_diary.model.grade;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import com.ditsov.school_diary.model.common.LabeledValueBean;
 
 public class GradeResponseBean {
 
   private Long id;
-  private Double value;
+  private BigDecimal value;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
   private LabeledValueBean<Long> student;
@@ -23,11 +24,11 @@ public class GradeResponseBean {
     this.id = id;
   }
 
-  public Double getValue() {
+  public BigDecimal getValue() {
     return value;
   }
 
-  public void setValue(Double value) {
+  public void setValue(BigDecimal value) {
     this.value = value;
   }
 

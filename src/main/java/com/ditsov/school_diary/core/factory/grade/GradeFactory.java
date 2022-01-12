@@ -1,5 +1,6 @@
 package com.ditsov.school_diary.core.factory.grade;
 
+import java.math.BigDecimal;
 import com.ditsov.school_diary.core.entity.grade.Grade;
 import com.ditsov.school_diary.core.entity.school.course.SchoolCourse;
 import com.ditsov.school_diary.core.entity.student.Student;
@@ -19,7 +20,7 @@ public interface GradeFactory extends AbstractFactory<GradeResponseBean, Grade> 
    * @return
    */
   Grade createGrade(
-      final Double value,
+      final BigDecimal value,
       final Student student,
       final SchoolCourse schoolCourse,
       final Teacher teacher);
@@ -31,5 +32,5 @@ public interface GradeFactory extends AbstractFactory<GradeResponseBean, Grade> 
    * @param value
    * @param teacher
    */
-  void populateGrade(final Grade grade, final Double value, final Teacher teacher);
+  void populateGrade(final Grade grade, final BigDecimal value, final Teacher teacher);
 }

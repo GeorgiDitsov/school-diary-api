@@ -1,5 +1,6 @@
 package com.ditsov.school_diary.controller.grade.helper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -42,8 +43,19 @@ public class GradeControllerHelper {
 
   @Autowired private TeacherService teacherService;
 
-  public List<GradeResponseBean> listAllGradesBy(final Long schoolCourseId) {
-    List<Grade> grades = gradeService.getAllBySchoolCourseId(schoolCourseId);
+  public List<GradeResponseBean> listAllGradesBy(
+      final Optional<Long> studentId,
+      final Optional<Long> schoolCourseId,
+      final Optional<Long> schoolSemesterId) {
+    List<Grade> grades = new ArrayList<>();
+
+    if (schoolCourseId.isPresent()) {
+      grades = gradeService.getAllBySchoolCourseId(schoolCourseId.get());
+    } else if (studentId.isPresent() && schoolSemesterId.isPresent()) {
+      grades =
+          gradeService.getAllByStudentIdAndSchoolSemesterId(
+              studentId.get(), schoolSemesterId.get());
+    }
 
     return grades.stream().map(gradeFactory::convertToResponseBean).collect(Collectors.toList());
   }

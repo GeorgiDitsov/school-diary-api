@@ -33,8 +33,11 @@ public class GradeController {
 
   @Secured({"ROLE_TEACHER", "ROLE_STUDENT", "ROLE_PARENT"})
   @GetMapping
-  public List<GradeResponseBean> listAllGradesBy(@RequestParam @Min(1) final Long schoolCourseId) {
-    return gradeControllerHelper.listAllGradesBy(schoolCourseId);
+  public List<GradeResponseBean> listAllGradesBy(
+      @RequestParam(required = false) @Min(1) final Optional<Long> studentId,
+      @RequestParam(required = false) @Min(1) final Optional<Long> schoolCourseId,
+      @RequestParam(required = false) @Min(1) final Optional<Long> schoolSemesterId) {
+    return gradeControllerHelper.listAllGradesBy(studentId, schoolCourseId, schoolSemesterId);
   }
 
   @Secured("ROLE_ADMIN")

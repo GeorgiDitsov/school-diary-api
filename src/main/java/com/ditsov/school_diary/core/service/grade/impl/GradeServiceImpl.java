@@ -57,6 +57,14 @@ public class GradeServiceImpl implements GradeService {
     return gradeRepository.findAllBySchoolCourseIdOrderByUpdatedAtDesc(schoolCourseId);
   }
 
+  /** @see GradeService#getAllByStudentIdAndSchoolSemesterId(Long, Long) */
+  @Override
+  public List<Grade> getAllByStudentIdAndSchoolSemesterId(
+      final Long studentId, final Long schoolSemesterId) {
+    return gradeRepository.findAllByStudentIdAndSchoolCourseSchoolSemesterIdOrderByUpdatedAtDesc(
+        studentId, schoolSemesterId);
+  }
+
   /** @see GradeService#getGradesStatisticsByStudentId(Long) */
   @Override
   public List<GradeStatistics> getGradesStatisticsByStudentId(final Long studentId) {
@@ -74,6 +82,16 @@ public class GradeServiceImpl implements GradeService {
   public BigDecimal getSuccessBySchoolCourseId(final Long schoolCourseId) {
     return gradeRepository
         .getSuccessBySchoolCourseId(schoolCourseId)
+        .map(success -> success.setScale(2, RoundingMode.HALF_UP))
+        .orElse(BigDecimal.ZERO);
+  }
+
+  /** @see GradeService#getSuccessByStudentIdAndSchooCourseId(Long, Long) */
+  @Override
+  public BigDecimal getSuccessByStudentIdAndSchooCourseId(
+      final Long studentId, final Long schoolCourseId) {
+    return gradeRepository
+        .getSuccessByStudentIdAndSchoolCourseId(studentId, schoolCourseId)
         .map(success -> success.setScale(2, RoundingMode.HALF_UP))
         .orElse(BigDecimal.ZERO);
   }

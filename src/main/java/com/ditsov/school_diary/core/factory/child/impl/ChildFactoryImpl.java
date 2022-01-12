@@ -14,6 +14,7 @@ public class ChildFactoryImpl implements ChildFactory {
   public ChildResponseBean convertStudentToChildResponseBean(final Student student) {
     ChildResponseBean bean = new ChildResponseBean();
 
+    bean.setId(student.getId());
     bean.setFullName(String.format("%s %s", student.getFirstName(), student.getLastName()));
     bean.setPin(String.format("%s****", student.getPin().substring(0, 6)));
     Optional.ofNullable(student.getSchoolGroup())

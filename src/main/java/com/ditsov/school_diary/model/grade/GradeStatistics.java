@@ -1,17 +1,20 @@
 package com.ditsov.school_diary.model.grade;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class GradeStatistics {
 
   private Long studentId;
   private Long schoolCourseId;
-  private Double average;
+  private BigDecimal average;
 
   public GradeStatistics() {}
 
   public GradeStatistics(Long studentId, Long schoolCourseId, Double average) {
     this.studentId = studentId;
     this.schoolCourseId = schoolCourseId;
-    this.average = average;
+    this.average = BigDecimal.valueOf(average).setScale(2, RoundingMode.HALF_UP);
   }
 
   public Long getStudentId() {
@@ -30,11 +33,11 @@ public class GradeStatistics {
     this.schoolCourseId = schoolCourseId;
   }
 
-  public Double getAverage() {
+  public BigDecimal getAverage() {
     return average;
   }
 
-  public void setAverage(Double average) {
+  public void setAverage(BigDecimal average) {
     this.average = average;
   }
 }

@@ -97,6 +97,8 @@ public class SchoolCourseFactoryImpl implements SchoolCourseFactory {
     ExtendedSchoolCourseResponseBean bean = new ExtendedSchoolCourseResponseBean();
 
     populateSchoolCourseBean(bean, schoolCourse);
+    bean.setTeacher(
+        labeledValueBeanFactory.convertPersonToAnonLabeledValueBean(schoolCourse.getTeacher()));
     bean.setSuccess(success);
 
     return bean;

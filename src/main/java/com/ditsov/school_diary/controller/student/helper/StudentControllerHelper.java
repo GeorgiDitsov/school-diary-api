@@ -1,5 +1,6 @@
 package com.ditsov.school_diary.controller.student.helper;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -76,8 +77,14 @@ public class StudentControllerHelper {
         .map(
             schoolCourse ->
                 schoolCourseFactory.convertSchoolCourseToExtendedSchoolCourseResponseBean(
-                    schoolCourse, null))
+                    schoolCourse,
+                    gradeService.getSuccessByStudentIdAndSchooCourseId(
+                        studentId, schoolCourse.getId())))
         .collect(Collectors.toList());
+  }
+
+  public BigDecimal getSuccessByStudentAndSchoolSemester(final Long studentId, final Long schoolSemesterId) {
+    return gradeService.getSuccessByStudentIdAndSchoolSemesterId(studentId, schoolSemesterId);
   }
 
   public void createStudent(final CreateStudentRequestBean studentBean) {

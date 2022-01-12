@@ -24,7 +24,17 @@ public interface GradeService extends AbstractService<Grade, Long> {
    * @param schoolCourseId
    * @return
    */
-  List<Grade> getAllBySchoolCourseId(final Long schoolSemesterId);
+  List<Grade> getAllBySchoolCourseId(final Long schoolCourseId);
+
+  /**
+   * Retrieves all grades by student and school semester.
+   *
+   * @param studentId
+   * @param schoolSemesterId
+   * @return
+   */
+  List<Grade> getAllByStudentIdAndSchoolSemesterId(
+      final Long studentId, final Long schoolSemesterId);
 
   /**
    * Retrieves grades statistics by student id.
@@ -49,6 +59,15 @@ public interface GradeService extends AbstractService<Grade, Long> {
    * @return
    */
   BigDecimal getSuccessBySchoolCourseId(final Long schoolCourseId);
+
+  /**
+   * Retrieves the success by student id and school course id.
+   *
+   * @param studentId
+   * @param schoolCourseId
+   * @return
+   */
+  BigDecimal getSuccessByStudentIdAndSchooCourseId(final Long studentId, final Long schoolCourseId);
 
   /**
    * Retrieves the success by student id and school semester id.

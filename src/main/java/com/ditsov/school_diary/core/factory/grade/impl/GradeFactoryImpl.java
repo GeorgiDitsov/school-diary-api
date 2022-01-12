@@ -1,5 +1,7 @@
 package com.ditsov.school_diary.core.factory.grade.impl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.ditsov.school_diary.core.entity.grade.Grade;
@@ -22,7 +24,7 @@ public class GradeFactoryImpl implements GradeFactory {
     GradeResponseBean bean = new GradeResponseBean();
 
     bean.setId(entity.getId());
-    bean.setValue(entity.getValue());
+    bean.setValue(entity.getValue().setScale(2, RoundingMode.HALF_UP));
     bean.setCreatedAt(entity.getCreatedAt());
     bean.setUpdatedAt(entity.getUpdatedAt());
     bean.setStudent(
@@ -36,10 +38,10 @@ public class GradeFactoryImpl implements GradeFactory {
     return bean;
   }
 
-  /** @see GradeFactory#createGrade(Double, Student, SchoolCourse, Teacher) */
+  /** @see GradeFactory#createGrade(BigDecimal, Student, SchoolCourse, Teacher) */
   @Override
   public Grade createGrade(
-      final Double value,
+      final BigDecimal value,
       final Student student,
       final SchoolCourse schoolCourse,
       final Teacher teacher) {
@@ -54,9 +56,9 @@ public class GradeFactoryImpl implements GradeFactory {
     return grade;
   }
 
-  /** @see GradeFactory#populateGrade(Grade, Double, Teacher) */
+  /** @see GradeFactory#populateGrade(Grade, BigDecimal, Teacher) */
   @Override
-  public void populateGrade(final Grade grade, final Double value, final Teacher teacher) {
+  public void populateGrade(final Grade grade, final BigDecimal value, final Teacher teacher) {
     grade.setValue(value);
     grade.setUpdatedBy(teacher);
   }

@@ -4,12 +4,21 @@ import java.math.BigDecimal;
 
 public class ChildResponseBean {
 
+  private Long id;
   private String fullName;
   private String pin;
   private String group;
   private BigDecimal success;
 
   public ChildResponseBean() {}
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
 
   public String getFullName() {
     return fullName;
